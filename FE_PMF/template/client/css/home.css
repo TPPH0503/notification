@@ -1,0 +1,261 @@
+.content-search {
+    position: fixed;
+    max-width: 500px;
+    width: 490px;
+    z-index: 2;
+    overflow-y: auto;
+    max-height: 90%;
+    background-color: white;
+    border: 1px solid rgba(128, 128, 128, 0.359);
+    border-radius: 7px;
+}
+
+.content-search ul li:hover {
+    background-color: rgba(198, 197, 197, 0.129);
+}
+
+.content-search ul li {
+    border: none;
+}
+
+.text-content {
+    display: block;
+    display: -webkit-box;
+    height: 16px*1.3*3;
+    font-size: 16px;
+    line-height: 1.3;
+    -webkit-line-clamp: 1;
+    /* số dòng hiển thị */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 40px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.content-search button {
+    background-color: rgba(0, 48, 90, 0);
+    outline: none;
+    border: none;
+    width: 100%;
+    max-height: 50px;
+}
+
+.content-search button:hover {
+    background-color: rgba(198, 197, 197, 0.129);
+}
+
+.list-group a {
+    color: rgb(98, 98, 98);
+    text-decoration: none;
+}
+
+.border-bottom {
+    border-bottom: 1px solid rgb(204, 204, 204);
+}
+
+.badge-email {
+    border-radius: 50%;
+    width: 35x;
+    min-width: 30px;
+    max-width: 35px;
+    height: 25px;
+    max-height: 25px;
+    font-size: 10px;
+    font-weight: bold;
+    justify-items: center;
+    align-items: center;
+}
+
+.text-content smail {
+    font-size: 12px;
+}
+
+.fa-bar-chart {
+    color: rgb(221, 10, 204);
+}
+
+#info {
+    position: fixed;
+    max-width: 400px;
+    width: 300px;
+    overflow-y: auto;
+    max-height: 90%;
+    border: 1px solid rgba(128, 128, 128, 0.359);
+    border-radius: 7px;
+    left: 80%;
+    top: 40px;
+    margin-right: auto;
+    color: black;
+}
+
+#info .list-group .hover:hover {
+    background-color: rgba(229, 229, 229, 0.321);
+}
+
+.list-group-item-nhathanh {
+    position: relative;
+    display: block;
+    padding: .70rem 1.20rem;
+    background-color: #fff;
+    color: black;
+}
+
+.list-group-item-nhathanh2 {
+    position: relative;
+    display: block;
+    background-color: #fff;
+    color: black;
+}
+
+.list-group-item-nhathanh2 i {
+    background-color: transparent;
+}
+
+.btn-infomation:hover .label {
+    display: block;
+}
+
+.form-group .members .email {
+    background-color: rgba(0, 0, 0, 0.796);
+    border-radius: 5px;
+    position: fixed;
+    width: 200px;
+    height: 30px;
+    padding: 5px;
+    margin-top: 40px;
+    margin-right: 50px;
+    left: auto;
+    display: none;
+}
+
+.form-group .members .email::before {
+    content: "";
+    position: absolute;
+    top: -19px;
+    left: 7px;
+    border-top: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid rgba(0, 0, 0, 0.796);
+}
+
+.form-group .members:hover .email {
+    display: block;
+}
+
+.label {
+    background-color: rgba(0, 0, 0, 0.796);
+    border-radius: 5px;
+    position: fixed;
+    top: 60px;
+    left: 93%;
+    width: 100px;
+    height: 45px;
+    padding: 5px;
+    display: none;
+}
+
+.label::before {
+    content: "";
+    position: absolute;
+    top: -19px;
+    left: 65px;
+    border-top: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid rgba(0, 0, 0, 0.796);
+}
+
+.dropdown-menu::before {
+    content: "";
+    position: absolute;
+    top: -19px;
+    left: 15px;
+    border-top: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid rgb(255, 255, 255);
+}
+
+
+/* Create button */
+
+.btn-create {
+    width: 110px;
+    height: 35px;
+    max-width: 110px;
+    max-height: 35px;
+    border-radius: 25px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid rgba(209, 209, 209, 0.341);
+    padding: 15px;
+    color: white;
+    transition: all 0.5s ease-in;
+}
+
+.btn-create:hover {
+    background-color: rgba(109, 110, 111, 0.474);
+}
+
+.btn-create p {
+    text-align: center;
+    font-size: 17px;
+    width: 40px;
+    margin-top: 12px;
+    margin-left: 15px;
+}
+
+.create-somthings a li {
+    color: rgba(0, 0, 0, 0.707);
+    background-color: transparent;
+}
+
+.create-somthings a:hover {
+    background-color: rgb(242, 242, 242);
+}
+
+.header-menu span i {
+    cursor: pointer;
+}
+
+.btn-accept {
+    background-color: #79B447;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+    padding-left: 17px;
+    padding-right: 17px;
+    border-radius: 3px;
+    border: none;
+    width: 100px;
+    max-width: 100px;
+    min-width: 50px;
+    margin: 2px;
+}
+
+.btn-cancel {
+    color: rgb(35, 35, 35);
+    padding: 5px;
+    padding-left: 17px;
+    padding-right: 17px;
+    transition: all 0.5s;
+    border-radius: 3px;
+    border: none;
+    background-color: transparent;
+    width: 100px;
+    max-width: 100px;
+    min-width: 50px;
+    margin: 2px;
+}
+
+.btn-cancel:hover {
+    background-color: #ef5350;
+    color: white;
+}

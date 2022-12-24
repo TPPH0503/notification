@@ -1,0 +1,64 @@
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-center">
+        <div class="modal-content">
+            <form class="p-4" name="formMeeting">
+                <div class="title">
+                    <h2 class="fst-bold">Schedule Meetting</h2>
+                </div>
+                <hr>
+                <div class="form-row">
+                    <div class="form-group col-lg-8">
+                        <label for="inputAddress" class="fst-bold"><b>Topic</b></label>
+                        <input type="text" class="form-control" name="topic" id="inputAddress" placeholder="Example: ABC" ng-model="meeting.activityName">
+                        <small class="text-danger font-italic" ng-show="formMeeting.topic.$touched && meeting.activityName ==''">Please not blank this field</small>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for=""><b>Project</b></label>
+                        <br>
+                        <select name="project" class="form-control" id="" ng-model="meeting.projectID">
+                            <option value="" selected="selected" hidden="hidden">Choose project</option>
+                            <option value="{{pr.projectID}}" ng-repeat="pr in projectOfUser" ng-click="member(pr.projectID)">{{pr.projectName}}</option>
+                        </select>
+                        <small class="text-danger font-italic" ng-show="formMeeting.project.$touched && meeting.project.projectID ==''">Please choose your project</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for=""><b>Start time</b></label>
+                    <input type="datetime-local" name="date" class="form-control" id="meeting" min="" placeholder="" ng-model="meeting.startDate">
+                    <small class="text-danger font-italic" ng-show="formMeeting.date.$touched &&today> meeting.cronExpress">The date you choose must be greater than today</small>
+                </div>
+                <div class="form-group" ng-show="membersNhaThanh != ''" style="overflow-x:auto ;">
+                    <label for=""><b>Member meeting</b></label>
+                    <div>
+                        <button [ngStyle]="{color: color}" class="btn-infomation members m-1" ng-repeat="me in membersNhaThanh">
+                            <label class="email">{{me.email}}</label>
+                            {{me.email.substring(0, 1).toLocaleUpperCase('en-US')}}
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for=""><b>Descriptions</b></label>
+                    <textarea ng-model="meeting.discription" placeholder="Write something here..." id="" cols="10" rows="5" class="form-control" name="discription"></textarea>
+                    <small class="text-danger font-italic" ng-show="formMeeting.discription.$touched && meeting.discription ==''">
+                        Can you describe a little about the meeting before invite all members in project
+                    </small>
+                </div>
+                <div class="fom-group">
+                    <input type="checkbox" name="check" ng-model="check" id="checkss"> <label class="text-secondary" for="checkss">
+                        <small>Accept the terms when you create a meeting with all project members!</small> 
+                    </label>
+                    <br>
+                    <small class="text-danger font-italic" ng-show="formMeeting.check.$invalid">
+                       Click here
+                    </small>
+                </div>
+                <div class="mt-2">
+                    <button class="btn btn-primary" style="width: 150px;" ng-click="saveMeeting()" ng-disabled="meeting.activityName==underfied ||meeting.projectID==underfied
+                    ||meeting.discription==underfied ||today> meeting.startDate  ||meeting.startDate==underfied || meeting.activityName=='' || meeting.discription==''
+                    ||check==underfied || check==false" data-dismiss="modal">Save</button>
+                    <button type="" class="btn btn-secondary" style="width: 150px;" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

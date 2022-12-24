@@ -1,0 +1,17 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="11.3936" y="12.3936" width="14.6516" height="14.6516" fill="#EEEBEA"/>
+<rect x="11.3936" y="34.3711" width="14.6516" height="14.6516" fill="#EEEBEA"/>
+<rect x="11.3936" y="56.3484" width="14.6516" height="14.6516" fill="#EEEBEA"/>
+<rect x="33.3711" y="12.3936" width="14.6516" height="14.6516" fill="#EEEBEA"/>
+<rect x="33.3711" y="34.3711" width="14.6516" height="14.6516" fill="#EEEBEA"/>
+<rect x="33.3711" y="56.3484" width="14.6516" height="14.6516" fill="#EEEBEA"/>
+<rect x="55.3486" y="12.3936" width="14.6516" height="14.6516" fill="#EEEBEA"/>
+<rect x="55.3486" y="34.3711" width="14.6516" height="14.6516" fill="#EEEBEA"/>
+<rect x="55.3486" y="56.3484" width="14.6516" height="14.6516" fill="#EEEBEA"/>
+<path d="M30 20H59C61.2091 20 63 21.7909 63 24V60.5C63 62.7091 61.2091 64.5 59 64.5H22C19.7909 64.5 18 62.7091 18 60.5V31" stroke="#0D0E10" stroke-width="2"/>
+<g style="mix-blend-mode:multiply">
+<circle cx="18.5" cy="19.5" r="11.5" fill="#F06A6A"/>
+</g>
+<path d="M19 12V21" stroke="#0D0E10" stroke-width="2"/>
+<path d="M19 23V25" stroke="#0D0E10" stroke-width="2"/>
+</svg>

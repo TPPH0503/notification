@@ -1,0 +1,100 @@
+<!-- Modal -->
+<div class="modal fade" id="modalSubtask" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header p-1 m-0">
+            <div class="modal-title" id="taskModalLabel">
+                <h5 class="modal-title p-1 ml-3 text-dark" style="line-height: 48px;" id="exampleModalLabel">Edit Subtask details</h5>
+            </div>
+        </div>
+        <div class="modal-body">
+                <div class="row g-3 align-items-center pb-1">
+                    <div class="col-2 text-center">
+                        <label for="recipient-name" class="col-form-label">Name</label>
+                    </div>
+                    <div class="col-10">
+                        <input type="text" class="form-control" ng-model="subTaskDetail.discription" id="recipient-name">
+                    </div>
+                </div>
+                <div class="row g-3 align-items-center mt-3">
+                    <div class="col-2 text-center">
+                        <label for="recipient-name" class="col-form-label">Status</label>
+                    </div>
+                    <div class="col-3">
+                        <input type="checkbox" style="cursor: pointer; width: 30px; height: 30px; border: 1px solid rgb(203, 203, 203);" ng-model="subTaskDetail.status" 
+                        data-task-id="{{task.taskID}}"
+                        id="{{subTaskDetail.subID}}"/>
+                    </div>
+                    <div class="col-3">
+                        <label for="recipient-name" class="col-form-label text-info ml-4">{{subTaskDetail.status==1?'Completed':'Incomplete'}}</label>
+                    </div>
+                </div>
+                <div class="row g-3 align-items-center mt-3">
+                    <div class="col-2" style="padding-left: 23px;">
+                        <label for="recipient-name" class="col-form-label">Assignee</label>
+                    </div>
+                    <div class="col-lg-3 col-md-6 dropdown">
+                        <button ng-show="check_role_member().team_role.roleID == 1" class="btn-assignee dropdown-toggle font-weight-bold p-2 mb-1 mt-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i ng-show="arrange_subtask_assigned(subTaskDetail.subID).length == 0" 
+                                                class="fa fa-user-circle-o" aria-hidden="true"></i>
+                            <img ng-show="arrange_subtask_assigned(subTaskDetail.subID).length != 0"  src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(arrange_subtask_assigned(subTaskDetail.subID).username)}}" width="18">
+                            &nbsp;{{arrange_subtask_assigned(subTaskDetail.subID).length != 0  ? arrange_subtask_assigned(subTaskDetail.subID).username : 'None'}} 
+                        </button>
+                        <button disabled ng-show="check_role_member().team_role.roleID == 2" class="btn-assignee dropdown-toggle font-weight-bold p-2 mb-1 mt-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i ng-show="arrange_subtask_assigned(subTaskDetail.subID).activity_category.categoryID != 13 " 
+                                                class="fa fa-user-circle-o" aria-hidden="true"></i>
+                            <img ng-show="arrange_subtask_assigned(subTaskDetail.subID).activity_category.categoryID == 13"  
+                            src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(arrange_subtask_assigned(subTaskDetail.subID).username)}}" width="18">
+                            &nbsp;{{(arrange_subtask_assigned(subTaskDetail.subID).length != 0  
+                                && arrange_subtask_assigned(subTaskDetail.subID).activity_category.categoryID == 12
+                                && arrange_subtask_assigned(subTaskDetail.subID).username == check_role_member().account.username) ||
+                                (arrange_subtask_assigned(subTaskDetail.subID).length != 0
+                                && arrange_subtask_assigned(subTaskDetail.subID).activity_category.categoryID == 13)
+                                ? arrange_subtask_assigned(subTaskDetail.subID).username : 'None'}} 
+                        </button>
+                        <div class="dropdown-menu drop-assignee" aria-labelledby="dropdownMenuButton">
+                            <input type="text" ng-model="query">
+                            <a ng-repeat="mem in ac_members | filter:query" ng-click="assigned_subtask_to_so(mem.username,subTaskDetail.subID,project.projectID,task.taskID)"    class="dropdown-item">
+                                <img  src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(mem.username)}}" width="18">
+                                <span >{{mem.email}}&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;{{mem.username}}</span>
+                            </a>
+                        </div>
+                    </div> 
+                    <div class="col-lg-5 col-md-6">
+                        <span id="passwordHelpInline" class="form-text">
+                            <div ng-show="check_role_member().team_role.roleID == 1">
+                                <div ng-show="arrange_subtask_assigned(subTaskDetail.subID).activity_category.categoryID == 12">
+                                    <h6 class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Waiting </div>
+                                <div ng-show="arrange_subtask_assigned(subTaskDetail.subID).activity_category.categoryID == 13">
+                                    <h6 class="text-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On board </h6></div>
+                                <div ng-show="arrange_subtask_assigned(subTaskDetail.subID).activity_category.categoryID == 14">
+                                    <h6 class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Refused </h6></div>
+                            </div>
+                            <div class="row" ng-show="check_role_member().team_role.roleID == 2 
+                                && arrange_subtask_assigned(subTaskDetail.subID).activity_category.categoryID == 12 
+                                && arrange_subtask_assigned(subTaskDetail.subID).username == check_role_member().account.username">
+                                <div class="ml-1"><button class="btn btn-success font-weight-bold" ng-click="accept_subtask_assigned(subTaskDetail.subID,project.projectID,task.taskID)" >Accept</button></div>
+                                <div class="ml-1"><button class="btn btn-danger font-weight-bold" ng-click="refuse_subtask_assgined(subTaskDetail.subID,project.projectID,task.taskID)" >Refuse</button></div>                        
+                            </div>
+                        </span>
+                    </div>
+                </div>
+                <div class="row g-3 align-items-center mt-3">
+                    <div class="col-2 text-center" style="padding-left: 20px;">
+                        <label for="recipient-name" class="col-form-label">Action</label>
+                    </div>
+                    <div class="col-8 p-0 m-0">
+                        <div class="row ml-3">
+                            <button type="button" class="btn btn-warning col-4 mr-3"><i class="bi bi-eraser"></i> </button>
+                            <button type="button" class="btn btn-danger col-4"><i class="bi bi-trash"></i> </button> 
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" ng-click="backToTask(task.taskID)"><i class="bi bi-box-arrow-left"></i></button>
+            <button type="button" class="btn btn-success col-2"><i class="bi bi-check-circle"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>

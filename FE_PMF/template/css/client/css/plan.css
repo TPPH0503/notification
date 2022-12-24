@@ -1,0 +1,131 @@
+ html {
+     scroll-behavior: smooth;
+ }
+ 
+ .navbar {
+     background-color: rgb(30, 31, 33);
+     position: fixed;
+     width: 100%;
+     z-index: 999;
+     box-shadow: 0 0 10px #7a8692;
+ }
+ 
+ .content .title {
+     color: #27292a;
+     text-align: center;
+     justify-items: center;
+ }
+ 
+ .content {
+     padding: 5%;
+ }
+ 
+ .content .plan {
+     padding: 5%;
+ }
+ 
+ .content .topic-plan {
+     background-image: url("https://d3ki9tyy5l5ruj.cloudfront.net/obj/91738ff71a0a90e3bface28e8b7a57a00b3e41c4/new_page_hat_refreshed.png");
+ }
+ 
+ .card-title img {
+     min-width: 72px;
+     width: 72px;
+ }
+ 
+ .card-title p {
+     font-size: 24px;
+     line-height: 32px;
+ }
+ 
+ ul {
+     list-style: none;
+ }
+ 
+ ul li {
+     position: relative;
+     list-style: none;
+ }
+ 
+ ul li::before {
+     content: '';
+     display: block;
+     width: 7px;
+     height: 12px;
+     top: 4px;
+     left: -22px;
+     border-radius: 0;
+     opacity: 1;
+     border-top-color: transparent;
+     border-left-color: transparent;
+     -webkit-transform: rotate(45deg);
+     transform: rotate(45deg);
+     border-right: 3px solid #a0a8ad;
+     border-bottom: 3px solid #a0a8ad;
+     position: absolute;
+     -webkit-transition: all .12s, border-color .08s;
+     transition: all .12s, border-color .08s;
+ }
+ 
+ .track-team ul li {
+     margin: 10px;
+     color: #6f7071;
+ }
+ 
+ .plan .card {
+     margin: 10px;
+ }
+ 
+ .btn-contact {
+     color: #426ec7;
+ }
+ 
+ .btn-contact:hover {
+     background-color: #426ec7;
+     color: white;
+ }
+ 
+ footer {
+     width: 960px;
+     margin-bottom: 120px;
+     margin-top: 64px;
+ }
+ 
+ .brands {
+     column-gap: 32px;
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     row-gap: 48px;
+ }
+ 
+ .brand {
+     align-items: center;
+     display: flex;
+     height: 40px;
+     justify-content: center;
+     width: 200px;
+ }
+ 
+ .brand img {
+     max-height: 40px;
+     border: 0;
+ }
+ 
+ .contact form {
+     width: 900px;
+     margin: auto;
+     border: 1px solid #b8b8b8;
+     padding: 3%;
+     border-radius: 10px;
+     box-shadow: 0 0 10px rgb(211, 211, 211);
+ }
+ 
+ .btn-select-predium {
+     background-color: #426ec7;
+     width: 85%;
+     height: 48px;
+     font-size: 18px;
+     justify-items: center;
+     align-items: center;
+ }
