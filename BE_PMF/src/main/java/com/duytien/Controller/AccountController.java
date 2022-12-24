@@ -272,7 +272,8 @@ public class AccountController {
 
 		if (!image.equals(null) || image != null) {
 			try {
-				Path filename = Paths.get("Image Account", image);
+				Path filename = Paths.get("Deployed Resources/webapp/Image Account/", image);
+//				Path filename = Paths.get("Deployed Resources/web-resources/Image Account/", image);
 				byte[] buffer = Files.readAllBytes(filename);
 				ByteArrayResource bar = new ByteArrayResource(buffer);
 				return ResponseEntity.ok().contentLength(buffer.length)
@@ -298,7 +299,8 @@ public class AccountController {
 	// Upload anh da chon vao thu muc Image Account
 	@PutMapping("/pmf/Account/upload")
 	public String upload(@RequestParam("file") MultipartFile image) {
-		Path path = Paths.get("Image Account/");
+		Path path = Paths.get("Deployed Resources/webapp/Image Account/");
+//		Path path = Paths.get("Deployed Resources/web-resources/Image Account/");
 		if (image != null) {
 			try {
 				InputStream inputStream = image.getInputStream();

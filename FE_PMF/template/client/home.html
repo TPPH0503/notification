@@ -240,33 +240,15 @@
                             </div>
                         </li>
                         <li>
-                            <a href="home.html">
+                            <a href="http://103.160.2.51:8080/projectmanagement/template/client/home.html">
                                 <i class="fa fa-home" aria-hidden="true"></i>
                                 <span>Home</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                <span>My Tasks</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-bell-o" aria-hidden="true"></i>
-                                <span>Inbox</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="testRP.html">
+                            <a href="http://103.160.2.51:8080/projectmanagement/template/client/testRP.html">
                                 <i class="fa fa-area-chart"></i>
                                 <span>Reporting</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-grav" aria-hidden="true"></i>
-                                <span>Portfolios</span>
                             </a>
                         </li>
                         <li>
@@ -297,44 +279,6 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="header-menu">
-                            <span>Browse teams</span>
-                        </li>
-                        <li class="sidebar-dropdown">
-                            <a href="#">
-                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
-                                <span>Request</span>
-                            </a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li>
-                                        <a href="#"><b>ABC</b>
-                                            <span class="badge badge-pill badge-danger">New</span>
-                                            <br>1 member <span class="text-light request">Request to Join</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><b>CCA</b>
-                                            <span class="badge badge-pill badge-danger">New</span>
-                                            <br>1 member <span class="text-light request">Request to Join</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><b>XYZ</b>
-                                            <span class="badge badge-pill badge-danger">New</span>
-                                            <br>1 member <span class="text-light request">Request to Join</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><b>UBT</b>
-                                            <span class="badge badge-pill badge-danger">New</span>
-                                            <br>1 member <span class="text-light request">Request to Join</span>
-                                        </a>
-                                    </li>
-                                    <a href="" class="text-light" id="request">Show more</a>
-                                </ul>
-                            </div>
-                        </li>
                     </ul>
                 </div>
                 <!-- sidebar-menu  -->
@@ -342,21 +286,21 @@
 
             <!-- sidebar-content  -->
             <div class="sidebar-footer">
-                <a ng-click="notificationOpen()" href="#exampleModal" data-toggle="modal" data-target="#exampleModal">
+                <a ng-click="notificationOpen()">
                     <i class="fa fa-bell"></i>
-                    <span ng-if="viewObject.newNotification > 0" class="badge badge-pill badge-warning notification">{{viewObject.newNotification}}</span>
+                    <!-- <span ng-if="viewObject.newNotification > 0" class="badge badge-pill badge-warning notification">{{viewObject.newNotification}}</span> -->
                 </a>
-                <a ng-click="notificationPrivateOpen()" href="#privateModal" data-toggle="modal" data-target="#privateModal">
+                <a ng-click="notificationPrivateOpen()">
                     <i class="fa fa-envelope"></i>
-                    <span ng-if="viewObject.newNotification > 0" class="badge badge-pill badge-success notification">{{viewObject.newNotification}}</span>
+                    <!-- <span ng-if="viewObject.newNotification > 0" class="badge badge-pill badge-success notification">{{viewObject.newNotification}}</span> -->
                 </a>
                 <a ng-click="load_profile()">
                     <i class="fa fa-cog"></i>
                 </a>
             </div>
-            <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/notificationModal.html'" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/client/notificationModal.html'" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             </div>
-            <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/notificationPrivateModal.html'" class="modal fade" id="privateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/client/notificationPrivateModal.html'" class="modal fade" id="privateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             </div>
         </nav>
         <!--Content1-->
@@ -461,7 +405,7 @@
                         </div>
                         <div class="col-6 h-100 centerElement">
                             <span class="w-100 text-right">
-                                <a href="testRP.html" class="noUnderlineHref text-primary" style="border:none;background:none">Details</a>
+                                <a href="http://103.160.2.51:8080/projectmanagement/template/client/testRP.html" class="noUnderlineHref text-primary" style="border:none;background:none">Details</a>
                             </span>
                         </div>
                     </h5>

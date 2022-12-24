@@ -64,7 +64,7 @@ firestore.collection(userID).onSnapshot(function(snapshot) {
 
 
 app.controller("sidebarController", ($scope, $http, $timeout, $interval, $location, $rootScope) => {
-    let hostNotification = "http://103.160.2.51:8080/projectmanagement/pmf";
+    let hostNotification = "http://103.160.2.51:8080/pmf/pmf";
     let host = "http://103.160.2.51:8080/pmf/pmf/Home";
     $rootScope.load_all_project = function() {
         var url = `http://103.160.2.51:8080/pmf/pmf/Project/getAllProjectsRelevantToAccount/${username}`;
@@ -3209,7 +3209,7 @@ app.controller("taskController", function($scope, $http, $compile, $rootScope, $
     }
 });
 app.controller("navbarController", ($scope, $http, $timeout, $interval, $controller) => {
-    let hostNha = "http://localhost:8080";
+    let hostNha = "http://103.160.2.51:8080/";
     //Nhã làm
     $scope.search = ''
     $scope.searchInvitation = ''
@@ -3333,7 +3333,7 @@ const projectConfiguration = async(projectList, list) => {
     return list;
 }
 const getNotification = async(projectID) => {
-    let hostNotification = "http://103.160.2.51:8080/projectmanagement/pmf";
+    let hostNotification = "http://103.160.2.51:8080/pmf/pmf";
     const notificationList = await $.ajax({
         url: `${hostNotification}/Activity/getActivitiesRelevantToProjectAndAccount/${projectID}/${sessionStorage.getItem('user')}`,
         type: 'GET',
@@ -3348,7 +3348,7 @@ const getNotification = async(projectID) => {
 
 //Client
 const getNotificationInvitation = async(projectID) => {
-    let hostNotification = "http://103.160.2.51:8080/projectmanagement/pmf";
+    let hostNotification = "http://103.160.2.51:8080/pmf/pmf";
     const notificationList = await $.ajax({
         url: `${hostNotification}/Activity/getAllActivitiesRelevantToInvitationInfor/${projectID}/${sessionStorage.getItem('user')}`,
         type: 'GET',
@@ -3365,7 +3365,7 @@ const getNotificationInvitation = async(projectID) => {
 
 
 const getNotificationTaskAssigned = async(projectID) => {
-    let hostNotification = "http://103.160.2.51:8080/projectmanagement/pmf";
+    let hostNotification = "http://103.160.2.51:8080/pmf/pmf";
     const notificationList = await $.ajax({
         url: `${hostNotification}/Activity/getAllActivitiesRelevantToTaskAssignedInfor/${projectID}/${sessionStorage.getItem('user')}`,
         type: 'GET',
@@ -3378,7 +3378,7 @@ const getNotificationTaskAssigned = async(projectID) => {
 }
 
 const getNotificationSubTaskAssigned = async(projectID) => {
-    let hostNotification = "http://103.160.2.51:8080/projectmanagement/pmf";
+    let hostNotification = "http://103.160.2.51:8080/pmf/pmf";
     const notificationList = await $.ajax({
         url: `${hostNotification}/Activity/getAllActivitiesRelevantToSubTaskAssignedInfor/${projectID}/${sessionStorage.getItem('user')}`,
         type: 'GET',
@@ -3393,7 +3393,7 @@ const getNotificationSubTaskAssigned = async(projectID) => {
 
 //Admin
 const getNotificationInvitationAdmin = async(projectID) => {
-    let hostNotification = "http://103.160.2.51:8080/projectmanagement/pmf";
+    let hostNotification = "http://103.160.2.51:8080/pmf/pmf";
     const notificationList = await $.ajax({
         url: `${hostNotification}/Activity/getAllActivitiesRelevantToInvitationInforAdmin/${projectID}`,
         type: 'GET',
@@ -3407,7 +3407,7 @@ const getNotificationInvitationAdmin = async(projectID) => {
 
 
 const getNotificationTaskAssignedAdmin = async(projectID) => {
-    let hostNotification = "http://103.160.2.51:8080/projectmanagement/pmf";
+    let hostNotification = "http://103.160.2.51:8080/pmf/pmf";
     const notificationList = await $.ajax({
         url: `${hostNotification}/Activity/getAllActivitiesRelevantToTaskAssignedInforAdmin/${projectID}`,
         type: 'GET',
@@ -3420,7 +3420,7 @@ const getNotificationTaskAssignedAdmin = async(projectID) => {
 }
 
 const getNotificationSubTaskAssignedAdmin = async(projectID) => {
-    let hostNotification = "http://103.160.2.51:8080/projectmanagement/pmf";
+    let hostNotification = "http://103.160.2.51:8080/pmf/pmf";
     const notificationList = await $.ajax({
         url: `${hostNotification}/Activity/getAllActivitiesRelevantToSubTaskAssignedInforAdmin/${projectID}`,
         type: 'GET',
@@ -3787,7 +3787,7 @@ function sendNotification(title, message, time) {
 
 
 async function sendAPINoti(messageNoti, userIDNoti, projectIDNoti, taskIDNoti) {
-    return await $.post("http://localhost:3000/sendNotification", {
+    return await $.post("http://103.160.2.51:3000/sendNotification", {
             title: username,
             message: messageNoti,
             userID: userIDNoti,
@@ -3948,7 +3948,7 @@ window.addEventListener('online',function(){
 
 app.controller("create-meeting", ($scope, $http) => {
     var username_Meeting = sessionStorage.getItem("user");
-    var hostNhaThanh = "http://103.160.2.51:8080/projectmanagement/pmf";
+    var hostNhaThanh = "http://103.160.2.51:8080/pmf/pmf";
     //Variable
     $scope.members = [];
     $scope.meetings = [];

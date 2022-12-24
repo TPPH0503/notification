@@ -24,7 +24,7 @@ function getCookie(cname) {
 }
 
 app.controller("login-controller", function($scope, $http) {
-    let host = "http://localhost:8080";
+    let host = "http://103.160.2.51:8080/pmf";
     //Check the user's login session
     $scope.login_session = function() {
         $http.get(`${host}/pmf/data/login/`).then(resp => {
@@ -46,7 +46,7 @@ app.controller("login-controller", function($scope, $http) {
                 } else {
                     console.log(value)
                     if (value.statusWeb == true) {
-                        alert("Lưu ý!! Hệ thống sẽ bắt đầu bảo trì trong vòng " + timeSince(new Date(value.startDate)) + ". Xin hãy lưu lại mọi chỉnh sửa trước thời gian trên");
+                        alert("Caution! System is shutting down in " + timeSince(new Date(value.startDate)) + ". Please save all your change before this time!");
                     }
                 }
             });
