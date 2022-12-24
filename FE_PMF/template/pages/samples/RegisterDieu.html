@@ -75,30 +75,30 @@
                                             <div class="billing-info col-lg-12 mt-3 p-4 rounded" style="border:1px solid rgb(221, 212, 212)">
                                                 <div class="row">
                                                     <div class="col-lg-6">
-                                                        <select name="cty" ng-model="ctyChooser" class="form-select form-control" id="floatingSelectCty" aria-label="Floating label select example">
+                                                        <select name="cty" ng-change="getCtys()" ng-model="ctyChooser" class="form-select form-control" id="floatingSelectCty" aria-label="Floating label select example">
                                                             <option value="" ng-if="ctyChooser==undefined">Chooser your Cty</option>
-                                                            <option ng-click="getCtys($index)" ng-repeat="cty in local">{{cty.name}}</option>
+                                                            <option  ng-repeat="cty in local" value="{{$index}}">{{cty.name}}</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-lg-6">
-                                                        <select name="distrists" ng-model="distristsChooser" class="form-select form-control" aria-label="Floating label select example">
+                                                        <select name="distrists" ng-change="getDistricts()" id="distrists" ng-model="distristsChooser" class="form-select form-control" aria-label="Floating label select example">
                                                             <option value="" ng-if="distristsChooser==undefined">Chooser your Districts</option>
-                                                            <option ng-repeat="dis in districts" ng-click="getDistricts($index)">{{dis.name}}</option>
+                                                            <option ng-repeat="dis in districts" value="{{$index}}">{{dis.name}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="mt-3"></div>
                                                 <div class="row">
                                                     <div class=" col-lg-6">
-                                                        <select name="ward" ng-model="wardChooser" class="form-select form-control" id="" aria-label="Floating label select example">
+                                                        <select name="ward" ng-model="wardChooser" ng-change="getWard()" class="form-select form-control" id="ward" aria-label="Floating label select example">
                                                             <option value="" ng-if="wardChooser==undefined">Chooser your Wards</option>
-                                                            <option ng-repeat="wa in wards" ng-click="getWard(wa.prefix,wa.name)">{{wa.prefix}} {{wa.name}}</option>
+                                                            <option ng-repeat="wa in wards" data-prefix="{{wa.prefix}}" data-name="{{wa.name}}">{{wa.prefix}} {{wa.name}}</option>
                                                         </select>
                                                     </div>
                                                     <div class=" col-lg-6">
-                                                        <select name="streets" ng-model="streetsChooser" class="form-select form-control" id="" aria-label="Floating label select example">
+                                                        <select name="streets" ng-model="streetsChooser" ng-change="getStreet()" class="form-select form-control" id="street" aria-label="Floating label select example">
                                                             <option value="" ng-if="streetsChooser==undefined">Chooser your Streets</option>
-                                                            <option ng-repeat="st in streets" ng-click="getStreet(st.prefix,st.name)">{{st.prefix}} {{st.name}}</option>
+                                                            <option ng-repeat="st in streets" data-prefix="{{st.prefix}}" data-name="{{st.name}}">{{st.prefix}} {{st.name}}</option>
                                                         </select>
                                                     </div>
                                                 </div>

@@ -8,12 +8,17 @@ app.controller("register", function($scope, $http) {
     $scope.listName = [];
     $scope.codeVerify = 0;
             // File by Nha Thanh
-    $http.get("http://103.160.2.51:8080/projectmanagement/template/JSON/local.json").then(function(d) {
-        $scope.local = d.data;
-    });
+	$scope.load_local_json = function(){
+
+    		$http.get("http://103.160.2.51:8080/projectmanagement/template/JSON/local.json").then(function(d) {
+        		$scope.local = d.data;
+    		});
+	}
+	$scope.load_local_json();
 
     // Method use for distrist combobox
-    $scope.getCtys = function(value) {
+    $scope.getCtys = function() {
+        var value = $('#floatingSelectCty').val();
         $scope.districts = $scope.local[value].districts;
         $scope.ctyId = value;
 
@@ -23,7 +28,8 @@ app.controller("register", function($scope, $http) {
     };
 
     // // Method use for cty combobox
-    $scope.getDistricts = function(value) {
+    $scope.getDistricts = function() {
+        var value = $('#distrists').val();
         disId = value;
         $scope.loadWard_Streets($scope.ctyId, disId);
     };
@@ -33,11 +39,13 @@ app.controller("register", function($scope, $http) {
         $scope.streets = $scope.local[cty].districts[dis].streets;
         quan = ", " + $scope.districts[dis].name; + ", ";
     };
-    $scope.getWard = function(value1, value2) {
-        phuong = value1 + " " + value2;
+    $scope.getWard = function() {
+        var value = $('#ward').val();
+        phuong = value;
     };
-    $scope.getStreet = function(value1, value2) {
-        duong = value1 + " " + value2;
+    $scope.getStreet = function() {
+        var value = $('#street').val();
+        duong = value;
     };
     //
     $scope.streets=[];
