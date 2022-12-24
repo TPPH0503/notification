@@ -1,0 +1,151 @@
+<style>
+    .hv{
+        background-color: rgb(253, 253, 253);
+    }
+    .hv:hover{
+        background-color: #f0f2f5;
+    }
+    .vm{
+        background-color: #f0f2f5;
+    }
+    .vm:hover{
+        border: 0.5px solid rgb(226, 226, 226)
+    }
+</style>
+<div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content h-100">
+        <div class="modal-header">
+            <h4 class="modal-title fs-5" id="exampleModalLabel">Private Notification</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+        <div class="modal-body row p-0 m-0" style="height:580px; background-color:rgb(253, 253, 253);">
+            
+            <div class="col-4">
+                <input id="searchProjectPrivate" type="text" ng-model="searchProjectPrivate" class="form-control col-12 mb-3 mt-3" placeholder="Search Project Name">
+                <div class="p-0 m-0" style="max-height:510px; overflow-y:scroll">
+                    <div ng-repeat="item in projectListPrivate | filter:searchProjectPrivate"
+                        style="width:95%; cursor: pointer;"
+                        class="row mr-auto ml-auto mb-2 pb-3 pl-3 pt-3 hv rounded border">
+
+                        <div class="col-2 m-auto p-0 text-secondary" ng-show="item.membership == true" style="display:flex; justify-content:center">
+                            <i class="fa fa-product-hunt" style="font-size:2.5rem"></i>
+                        </div>
+                        <div class="col-2 m-auto p-0 text-info" ng-show="item.membership == false" style="display:flex; justify-content:center">
+                            <i class="fa fa-exclamation-circle" style="font-size:2.9rem"></i>
+                        </div>
+                        <div class="col-10 row m-auto p-0">
+                            <div class="col-10 col pl-3 p-0 m-auto text-dark font-weight-normal" style="font-size:17px">
+                                <div class="col-12 m-auto p-0">
+                                    <h5>{{item.projectName}}
+                                    </h5>
+                                </div>
+                                <div class="col-12 m-auto p-0">
+                                    <span ng-if="item.project_security.securityID == 2" class="badge badge-danger"
+                                        style="font-weight:normal">{{item.project_security.securityName}}</span>
+                                    <span ng-if="item.project_status.statusID == 1" class="badge badge-success"
+                                        style="font-weight:normal">{{item.project_status.statusName}}</span>
+                                    <span ng-if="item.project_status.statusID == 2" class="badge badge-secondary"
+                                        style="font-weight:normal">{{item.project_status.statusName}}</span>
+                                    <span  class="badge  {{item.membership == false ? 'badge-warning' : 'badge-info text-white'}} font-weight-bold"
+                                        style="font-weight:normal">{{item.membership == true ? 'Attended' : 'Invitation'}}</span>    
+                                    <span class="badge badge-info"
+                                        style="font-weight:normal">{{item.team.team_members.length}}</span>
+                                </div>
+                            </div>
+                            <div class="col-2 row m-auto">
+                                <span ng-if="item.projectNotification != 0" class="badge badge-danger"
+                                    style="font-size:13px">{{item.projectNotification}}</span>
+                            </div>
+                        </div>
+                        <div ng-show="item.membership == true" class="row pt-3 col-12">
+                            <div class="col-4 text-secondary">Project Type</div>
+                            <div class="col-8">
+                                <div class="dropdown">
+                                    <button ng-click="change_section_pi(item.projectID)" class="btn-assignee dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Choose type
+                            </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="cursor: pointer;">
+                                        <a ng-click="changeViewPrivate(item.projectID,1)" class="dropdown-item">
+                                            <i class="fa fa-check text-success" >&nbsp;</i> 
+                                            <span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invitation</span> 
+                                        </a>
+                                        <a ng-click="changeViewPrivate(item.projectID,2)" class="dropdown-item">
+                                            <i class="fa fa-check text-success" >&nbsp;</i> 
+                                            <span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Task Assigned</span> 
+                                        </a>
+                                        <a ng-click="changeViewPrivate(item.projectID,3)" class="dropdown-item">
+                                            <i class="fa fa-check text-success" >&nbsp;</i> 
+                                            <span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sub task Assigned</span> 
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="item.membership == false" class="row pt-3 col-12">
+                            <div class="col-12 row" >
+                                <div class="col-4 mt-2"><p  class="text-danger font-weight-bold" style="font-size: 15px; font-family: 'Varela Round', sans-serif;">For you</p></div>
+                                <div class="col-3 ml-1 mr-1"><button class="btn btn-success font-weight-bold" ng-click="accept_invitation(item.projectID)" >Accept</button></div>
+                                <div class="col-3"><button class="btn btn-danger font-weight-bold" ng-click="refuse_invitation(item.projectID)" >Refuse</button></div>       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8 pt-2 pl-2 pr-3 m-0 row" style="background-color:rgb(253, 253, 253);">
+                <input id="searchNotificationPrivate" type="text" ng-model="searchNotificationPrivate" class="form-control col-12 mb-3 mt-2" placeholder="Search notification">
+                <div class="font-weight-bold m-auto" style="font-size:25px;" ng-if="viewObject.view == false">
+                    You haven't chosen any project &nbsp; <i class="fa fa-check" style="font-size:2.5rem"></i>
+                </div>
+                <div style="max-height:510px; max-width: 892px; overflow-x: hidden; overflow-y:scroll">
+                    <div ng-repeat="item in notificationList |filter:searchNotificationPrivate| limitTo:indexNotificationPrivate:0" ng-if="viewObject.view == true"
+                    style=" width: 970px; height: auto; cursor: context-menu;" class="row mr-auto ml-auto mb-1 pb-3 pt-3 hv">
+                        <div class="col-2 m-auto p-0" style="display:flex; justify-content:center">
+                            <i class="fa fa-bell text-warning" style="font-size:25px;"></i>
+                        </div>
+                        <div class="col-10 row m-auto p-0" style="font-size:17px;">
+                            <div class="col-8 p-0 row m-auto" style="font-size:17px">
+                                <div class="col-12 text-dark font-weight-bold">{{item.activityName}}</div>
+                            </div>
+                            <div class="col-4 m-auto p-0">
+                            <small class="text-secondary"> <i class="far fa-clock"></i> &nbsp; {{item.startDate}}</small>
+                            </div>
+                        </div>
+                        <div ng-show="check_role_member().team_role.roleID == 2" class="col-12 row pt-2">
+                            <div class="col-12 row" 
+                            ng-show="arrange_task_assigned(item.objectID).activity_category.categoryID == 9
+                                    && item.activity_category.categoryID == 9 
+                                    && arrange_task_assigned(item.objectID).activityID == item.activityID" >
+                                <div class="col-2 ml-5"><h6  class="text-danger font-weight-bold">For you</h6></div>
+                                <div class="col-2 ml-3"><button class="btn btn-success font-weight-bold" ng-click="accept_task_assigned(item.objectID,item.projectID)" >Accept</button></div>
+                                <div class="col-2 ml-3"><button class="btn btn-danger font-weight-bold" ng-click="refuse_task_assgined(item.objectID,item.projectID)" >Refuse</button></div>       
+                            </div>
+                            <div class="col-12 row" ng-show="arrange_subtask_assigned(item.objectID).activity_category.categoryID == 12
+                            && item.activity_category.categoryID == 12
+                            && arrange_subtask_assigned(item.objectID).activityID == item.activityID" >
+                                <div class="col-2 ml-5"><h6  class="text-danger font-weight-bold">For you</h6></div>
+                                <div class="col-2 ml-3"><button class="btn btn-success font-weight-bold" ng-click="accept_subtask_assigned(item.objectID,item.projectID,getTaskID(item.objectID))" >Accept</button></div>
+                                <div class="col-2 ml-3"><button class="btn btn-danger font-weight-bold" ng-click="refuse_subtask_assgined(item.objectID,item.projectID,getTaskID(item.objectID))" >Refuse</button></div>       
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div ng-click="viewMorePrivate()" ng-if="viewObject.view == true && notificationList.length > 7"
+                        style=" width: 970px; height: auto; cursor: context-menu;" class="row mr-auto ml-auto mb-1 pb-3 pt-3 vm">
+                        <div class="col-4 row m-auto p-0" style="font-size:17px;">
+                            <div class="col-5 p-0 row m-auto" style="font-size:17px">
+                                View more...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            <h6><i>Click to any project to see notification</i></h6>
+        </div>
+    </div>
+</div>

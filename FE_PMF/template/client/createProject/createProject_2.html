@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Favicon-->
+    <link rel="icon" type="image/x-icon" href="http://103.160.2.51:8080/projectmanagement/template/images/logos/logo.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="http://103.160.2.51:8080/projectmanagement/template/css/client/css/bootstrap4.6.2.css">
+    <link rel="stylesheet" href="http://103.160.2.51:8080/projectmanagement/template/css/client/css/createProject.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+
+    <title>New Project - Rman</title>
+</head>
+
+<body ng-app="main" ng-controller="projectController" style="position:relative">
+    <header class="d-flex w-100 new-header">
+        <div class=""> <button onclick="history.back()" class="btn"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></button></div>
+    </header>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <div class="content">
+        <form class="w-100 h-100">
+            <div class="card-title">
+                <h3>New Project</h3>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 mb-3">
+                    <label for="validationServer01">Project name</label>
+                    <input type="text" ng-model="project_name" class="form-control is-valid" id="validationServer01" value="Mark" required>
+                    <div id="validationServer01" class="invalid-feedback">
+                        Project name is requied
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="validationServer03">Select a team</label>
+                    <input type="text" ng-model="team_name" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required>
+                    <div id="validationServer03Feedback" class="invalid-feedback">
+                        Please...........
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="validationServer04">Privacy</label>
+                    <select class="custom-select is-invalid" ng-model="selected_security" id="validationServer04" aria-describedby="validationServer04Feedback" required> 
+                        <option ng-repeat="se in security" value="{{se.securityID}}">{{se.securityName}}</option>
+                    </select>
+                    <div id="validationServer04Feedback" class="invalid-feedback">
+                        Please ...........
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-12">Default views</div>
+                <nav class="col-12 h-100">
+                    <div class="w-100 h-100 nav nav-tabs design row m-0 p-2" id="nav-tab" role="tablist">
+                        <button class="h-50 col-lg-6 row m-0 p-3" id="nav-create-views" data-toggle="tab" data-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+                            <i class="fa fa-list p-0 mr-2 col-3 text-danger centerElement" aria-hidden="true"></i> 
+                            <span class="col-8 p-0 text-left centerElement">List</span>
+                        </button>
+                        <button class="h-50 col-lg-6 row m-0 p-3" id="nav-create-board" data-toggle="tab" data-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+                            <i class="fa fa-table p-0 mr-2 col-3 text-info centerElement" aria-hidden="true"></i> 
+                            <span class="col-8 p-0 text-left centerElement">Board</span>
+                        </button>
+                    </div>
+                    <div class="w-100 h-100 nav nav-tabs design row m-0 p-2">
+                        <button class="h-50 col-lg-6 row m-0 p-3" id="nav-create-timeline" data-toggle="tab" data-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
+                            <i class="fa fa-cubes p-0 mr-2 col-3 text-success centerElement" aria-hidden="true"></i> 
+                            <span class="col-8 p-0 text-left centerElement">Timeline</span>
+                        </button>
+                        <button class="h-50 col-lg-6 row m-0 p-3" id="nav-create-calendar" data-toggle="tab" data-target="#nav-calendar" type="button" role="tab" aria-controls="nav-calendar" aria-selected="false">
+                            <i class="fa fa-calendar p-0 mr-2 col-3 text-danger centerElement" aria-hidden="true"></i> 
+                            <span class="col-8 p-0 text-left centerElement">Calendar</span>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+            <button class="btn btn-primary w-100" ng-click="create_project()" type="submit">Continue</button>
+        </form>
+    </div>
+    <div class="content-2">
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-create-views">
+                <img class="w-100 h-100" alt="This is a preview of your project" class="-image" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/efa34dcd90db1f5a77cc3f1bb864dd3d91def55d/List, no avatars.png">
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-create-board">
+                <img class="w-100 h-100" alt="This is a preview of your project" class="" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/621e3fecc417a5455269791daa22b5d5b1feda2b/Board, no avatars.png">
+            </div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-create-timeline">
+                <img class="w-100 h-100" alt="This is a preview of your project" class="" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/bfeb331070017599fda4c96907b2fb7cea28d858/Timeline, no avatars.png">
+            </div>
+            <div class="tab-pane fade" id="nav-calendar" role="tabpanel" aria-labelledby="nav-create-calendar">
+                <img class="w-100 h-100" alt="This is a preview of your project" class="" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/63306c12043b0a783a7ff409222ce80cc48e1dc1/Calendar, no avatars.png">
+            </div>
+        </div>
+
+    </div>
+    <!-- page-content" -->
+    <!-- page-wrapper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <script src="http://103.160.2.51:8080/projectmanagement/template/css/client/js/jquery.js"></script>
+    <script src="http://103.160.2.51:8080/projectmanagement/template/css/client/js/home.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<div  class="modal fade" id="actTaskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="task-content">
+            <div class="modal-header">
+                <div class="modal-title" id="taskModalLabel">
+                    <button class="btn-markcome" ng-click="backToTask(task.taskID)"><i class="fa fa-caret-left" aria-hidden="true"></i>
+                    Back</button>
+                </div>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+            </div>
+            <div class="private row-columne">
+                <div>
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                </div>
+                <div>
+                    This task is private to you
+                </div>
+                <div class="option-task ml-auto" style="float: right;">
+                    <button class="public">Make Public</button>
+                    <button class="private" type="hidden" style="display: none;">Make Private</button>
+                    <button data-toggle="dropdown">
+                        <i class="fa fa-ellipsis-h text-secondary" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button ng-click="deleteTask(0)" data-dismiss="modal" class="dropdown-item text-danger">
+                            <i class="fa fa-trash-o"></i>
+                            Delete this task</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" id="modal-task">
+                <div class="task-content">
+                    <h4 class="task-name">Activities of task {{task.taskName}}</h4>
+                </div>
+                <div>
+                    <div ng-repeat="act in act_one_task" class="user-history m3  p-2" >
+                        <div class="d-flex">
+                            <div class="avartar-email"> 
+                                <span class="rounded-circle border bg-danger p-2 text-light">
+                                    {{act.username.charAt(0).toUpperCase()}}{{act.username.charAt(1).toUpperCase()}}</span></div>
+                            <div>
+                                <div class="sub-content ml-2"><a href="#"></a> {{act.activityName}} <small class="text-secondary">{{act.startDate}}</small></div>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <div class="sub-content ml-4"><small class="text-secondary">This task</small> </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

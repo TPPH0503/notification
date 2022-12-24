@@ -1,0 +1,78 @@
+
+<div class="modal-dialog" style="min-width: 600px; height:80%" role="document">
+    <div class="modal-content h-50">
+        <div class="modal-header p-0" style="height: 15%">
+            <h5 class="modal-title p-1 ml-3 text-dark" style="line-height: 48px;" id="exampleModalLabel">Invite to project</h5>
+            <a class="modal-title p-1 mr-4 text-secondary" data-dismiss="modal" aria-label="Close" style="line-height: 48px; font-size: 20px; cursor: pointer;" id="exampleModalLabel"><i class="fa fa-close"></i></a>
+        </div>
+        <div class="modal-body row p-2 p-0 m-0" style="background-color: #fff;">
+            <div class="row w-100 justify-content-start mt-3 mb-4" style="height: auto;">
+                <form id="custom-search-form2" class="form-search form-horizontal pull-right col-10">
+                    <label class="input-group ml-4 mb-0" for="search3" style="background-color: #fff; border: solid 1px #d1cfcf; cursor: text;">
+                        <div class="input-group-append in-search" style="padding: 3%; padding-right: 0px; align-items: center;">
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <input id="search2" ng-keyup="findDataInvitation()" ng-model="searchInvitation" class="in-search text-dark" placeholder="Search...">
+                    </label>
+                   
+                    <div id="patternEmail" style="display: none;"><span class="text-danger font-weight-bold">Wrong email pattern!</span></div>
+                    <div class="card content-search" ng-show="searchInvitation != ''" style="border:none">
+                        <!--If user search infoamtion on input search display block  -->
+                        <div class="content-search" ng-show="searchInvitation != ''" id="content-search">
+                            <button onclick="hrefAddTagNone()" class="btn text-dark d-flex text-left" style="border-bottom:1px solid rgb(232, 232, 232) ;">
+                                <div id="none" data-value="{{searchInvitation}}" class="text-content p-2">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Invite <b> "{{searchInvitation}}"</b> via email
+                                </div>
+                            </button>
+                            <!-- Find people -->
+                            <div class="border-bottom" ng-show="accountInvitation.length!=0" style="overflow-y: scroll; max-height: 250px;">
+                                <div class="card-title text-secondary pl-3 pt-2">People in system</div>
+                                <ul class="list-group">
+                                    <!-- A person -->
+                                    <a href="#" onclick="hrefAddTagOne(this)" data-email="{{ac.email}}" ng-repeat="ac in accountInvitation">
+                                        <li class="list-group-item d-flex" style="align-items: center;">
+                                            <div class="mr-2 bg-danger text-center pt-1" style="border-radius: 60%;"><span class="text-light badge badge-email">{{ac.email.charAt(0).toUpperCase()}}</span>
+                                            </div>
+                                            <div class="text-content">{{ac.fullname}}
+                                                <smail style="font-style: 5px;">{{ac.email}}</smail>
+                                            </div>
+                                        </li>
+                                    </a>
+                                    <!-- End A person -->
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                <div class="col-2" style="height: 100%;">
+                    <button class="centerElement btn btn-primary text-light" style="height: 100%; width: 100%;" ng-click="getAllTagInput()">Send</button>
+                </div>
+            </div>
+            <div class="col-12 pt-3 pb-3 pl-3" style="background-color: #fff; border-top: solid 1px #d1cfcf;">
+                <h5 class="modal-title text-dark" id="exampleModalLabel">Project's member</h5>
+            </div>
+            <div class="col-md-12" style="height: 500px; max-height: 470px; overflow-y: scroll;">
+                
+                <div class="card mt-1 mb-2 col-12" style="border: 0px;" ng-repeat="mb in listProjectMember">
+                    <div class="row g-0">
+                      <div class="col-md-1 p-1">
+                        <img class="img-responsive img-rounded border-rouded rounded-start" style="box-shadow: 0 5px 5px rgb(159, 159, 159); width: 45px; height: 45px; object-fit: cover; border-radius: 50%;" src="http://103.160.2.51:8080/pmf/pmf/getImage/{{mb.account.image}}" alt="User picture">
+                      </div>
+                      <div class="col-md-7 pl-4">
+                        <div class="card-body pt-1 p-1">
+                          <h6 class="card-title text-dark font-weight-bold" style="margin-bottom: 0;">{{mb.account.fullname}} <span ng-show="mb.account.username == myself">(You)</span></h6>
+                          <p class="card-text text-secondary">@{{mb.account.username}}</p>
+                         </div>
+                      </div>
+                      <div class="col-md-4">
+                        <h6 class="p-3 mt-1 text-center text-light" ng-show="mb.team_role.roleID == 2" style="background-color: #a4aaae; cursor: not-allowed">{{mb.team_role.roleName}}</h6>
+                        <h6 class="p-3 mt-1 text-center text-light" style="background-color: #36383b; cursor: not-allowed;" ng-show="mb.team_role.roleID == 1">{{mb.team_role.roleName}}</h6>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

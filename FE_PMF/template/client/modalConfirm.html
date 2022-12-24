@@ -1,0 +1,160 @@
+<style>
+
+    .modal-confirm {
+        color: #636363;
+        width: 400px;
+    }
+
+    .modal-confirm .modal-content {
+        padding: 20px;
+        border-radius: 5px;
+        border: none;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .modal-confirm .modal-header {
+        border-bottom: none;
+        position: relative;
+    }
+
+    .modal-confirm h4 {
+        text-align: center;
+        font-size: 26px;
+        margin: 30px 0 -10px;
+    }
+
+    .modal-confirm .close {
+        position: absolute;
+        top: -5px;
+        right: -2px;
+    }
+
+    .modal-confirm .modal-body {
+        color: #999;
+    }
+
+    .modal-confirm .modal-footer {
+        border: none;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 13px;
+        padding: 10px 15px 25px;
+    }
+
+    .modal-confirm .modal-footer a {
+        color: #999;
+    }
+
+    .modal-confirm .icon-box {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        border-radius: 50%;
+        z-index: 9;
+        text-align: center;
+        border: 3px solid #f15e5e;
+    }
+
+    .modal-confirm .icon-box i {
+        color: #f15e5e;
+        font-size: 46px;
+        display: inline-block;
+        margin-top: 13px;
+    }
+
+    .modal-confirm .btn,
+    .modal-confirm .btn:active {
+        color: #fff;
+        border-radius: 4px;
+        background: #60c7c1;
+        text-decoration: none;
+        transition: all 0.4s;
+        line-height: normal;
+        min-width: 120px;
+        border: none;
+        min-height: 40px;
+        border-radius: 3px;
+        margin: 0 5px;
+    }
+
+    .modal-confirm .btn-secondary {
+        background: #c1c1c1;
+    }
+
+    .modal-confirm .btn-secondary:hover,
+    .modal-confirm .btn-secondary:focus {
+        background: #a8a8a8;
+    }
+
+    .modal-confirm .btn-danger {
+        background: #f15e5e;
+    }
+
+    .modal-confirm .btn-danger:hover,
+    .modal-confirm .btn-danger:focus {
+        background: #ee3535;
+    }
+
+    .trigger-btn {
+        display: inline-block;
+        margin: 100px auto;
+    }
+</style>
+
+<!-- Modal HTML -->
+<div style="z-index:9999" id="confirmModal" class="modal fade">
+    <div class="modal-dialog modal-confirm modal-dialog-centered">
+        <div class="modal-content" style="border: 1px solid #f15e5e; box-shadow: 0 0 5px #f15e5e;">
+            <div class="modal-header flex-column">
+                <div class="icon-box">
+                    <i class="bi bi-exclamation-lg mt-2"></i>
+                </div>
+                <h4 class="modal-title w-100" style="font-family: 'Varela Round', sans-serif;">Are you sure?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body" style="font-family: 'Varela Round', sans-serif;">
+                <p id="titleConfirm1"></p>
+                <p id="titleConfirm2"></p>
+                <div class="comment-area"> 
+                    <textarea class="form-control" id="confirmForm" placeholder="Your description..." rows="4"></textarea> 
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button id="disconfirm" type="button" class="btn btn-secondary">Cancel</button>
+                <button id="confirm" type="button" class="btn btn-danger">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="text-right cross" id="disconfirmicon"> <i class="fa fa-times mr-2"></i> </div>
+            <div class="card-body text-center">
+                <i class="fa fa-times-circle-o text-danger mr-2" style="font-size:100px;"></i>
+                
+                <div class="comment-box text-center">
+                    <h4 id="titleConfirm1"></h4>
+                    <h5 id="titleConfirm2"></h5>
+                <div class="comment-area"> 
+                    <textarea class="form-control" id="confirmForm" placeholder="What is your reason ? (Request if refused)" rows="4"></textarea> 
+                </div>
+                    
+                 <div class="text-center row mt-4">
+                    <div class="col-6">
+                        <button id="confirm" class=" btn btn-danger  px-5 mr-2">Confirm <i class="fa fa-long-arrow-right ml-1"></i></button>
+                    </div> 
+                    <div class="col-6">
+                        <button id="disconfirm" class=" btn btn-info px-5 ">Cancel</button>
+                    </div>    
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div> -->

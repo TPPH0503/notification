@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Task - RMF</title>
+    <!--Favicon-->
+    <link rel="icon" type="image/x-icon" href="http://103.160.2.51:8080/projectmanagement/template/images/logos/logo.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="http://103.160.2.51:8080/projectmanagement/template/css/client/css/bootstrap4.6.2.css">
+    <link rel="stylesheet" href="http://103.160.2.51:8080/projectmanagement/template/css/client/css/style.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <script src="http://103.160.2.51:8080/projectmanagement/template/css/client/js/angular-min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://103.160.2.51:8080/projectmanagement/template/css/client/css/report.css">
+    <script src="http://103.160.2.51:8080/projectmanagement/template/css/client/js/jquery-min.js"></script>
+    <script src="http://103.160.2.51:8080/projectmanagement/template/css/client/js/jquery-ui.js"></script>
+    <link rel="stylesheet" href="http://103.160.2.51:8080/projectmanagement/template/client/css/home.css">
+    <link rel="stylesheet" href="http://103.160.2.51:8080/projectmanagement/template/css/client/css/toast.css">
+    <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/toasty.css" rel="stylesheet" />
+
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+
+    <style>
+        .btnCustom {
+            transition: delay(0.3s);
+        }
+        
+        .btnCustom:hover {
+            background-color: rgba(180, 180, 180, 0.171);
+        }
+    </style>
+</head>
+
+<body onload="checkForMaintenance()" ng-app="main" style="overflow-y: hidden;" id="taskController" ng-controller="taskController">
+    <div id="importantNotification" class="d-none fixed-top w-100" style="height:25px;z-index: 100">
+        <div class="alert alert-danger border-0 rounded-0 p-0 w-100 m-0 h-100" role="alert">
+            <p class="text-center d-block w-100 h-100 m-0">
+                <span id="maintainanceNotification"></span>&nbsp;|&nbsp;<button onclick="document.getElementById('importantNotification').style.display = 'none'" class="iUnderStand font-weight-bold border-0 p-0" style="background:none">Tôi đã hiểu</button>
+            </p>
+        </div>
+    </div>
+    <div class="page-wrapper chiller-theme toggled">
+        <div class="page-nav" id="navbar" ng-controller="navbarController">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <a id="show-sidebar" class="btn btn-sm btn-nav" href="#">
+                        <i class="fas fa-bars text-light"></i>
+                    </a>
+                    <ul class="navbar-nav mr-auto"></ul>
+                    <form id="custom-search-form" class="form-search form-horizontal pull-right mr-auto">
+                        <div class="input-group">
+                            <div class="input-group-append in-search">
+                                <i class="fa fa-search"></i>
+                            </div>
+                            <input id="search" type="search" ng-keyup="findData()" ng-blur="search = ''" ng-model="search" class="in-search" placeholder="Search...">
+                        </div>
+                        <div class="card content-search" ng-show="search != ''" style="border:none">
+                            <!--If user search infoamtion on input search display block  -->
+                            <div class="content-search" style="max-height:80%;" ng-show="search != ''">
+                                <button class="btn text-dark text-left" ng-if="areThereAnyResult() === true" style="max-height:none;border-bottom:1px solid rgb(232, 232, 232) ;">
+                                    <div class="text-content m-0" style="max-height:none; display:block">
+                                        Oops!! There weren't any results matches <b>{{search}}</b>
+                                    </div>
+                                </button>
+                                <!-- Find task -->
+                                <div class="border-bottom " ng-show="task.length!=0 ">
+                                    <div class="card-title text-secondary pl-3 pt-2 ">Task</div>
+                                    <ul class="list-group ">
+                                        <!-- A task -->
+                                        <a href="# " ng-repeat="tk in task ">
+                                            <li class="list-group-item d-flex align-items-top "><i class="fa fa-check-circle-o p-1 " aria-hidden="true "></i>
+                                                <div>
+                                                    <div class="text-content "> {{tk.taskName}}</div>
+                                                    <div>{{task.section.project.projectName}}</div>
+                                                </div>
+                                            </li>
+                                        </a>
+                                        <!-- End a task -->
+                                    </ul>
+                                </div>
+                                <!-- Find task_sub -->
+                                <div class="border-bottom " ng-show="tasksub.length!=0 ">
+                                    <div class="card-title text-secondary pl-3 pt-2 ">Task_sub</div>
+                                    <ul class="list-group ">
+                                        <!-- A taskSub -->
+                                        <a href="# " ng-repeat="ts in tasksub ">
+                                            <li class="list-group-item d-flex align-items-top "><i class="fa fa-check-circle-o p-1 " aria-hidden="true "></i>
+                                                <div>
+                                                    <div class="text-content "> {{ts.discription}}</div>
+                                                    <div>
+                                                        <i class="fa fa-circle-o text-danger " aria-hidden="true "></i> id: {{ts.subID}}
+                                                        <span ng-if="ts.status===t rue " class="badge bg-success text-light ">Done</span>
+                                                        <span ng-if="ts.status===f alse " class="badge bg-danger text-light ">Undone</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </a>
+                                        <!-- End a task sub -->
+                                    </ul>
+                                </div>
+                                <!-- Find project -->
+                                <div class="border-bottom " ng-show="project.length!=0 ">
+                                    <div class="card-title text-secondary pl-3 pt-2 ">Project</div>
+
+                                    <ul class="list-group ">
+                                        <!-- A project -->
+                                        <a href="# " ng-repeat="pr in project ">
+                                            <li class="list-group-item text-content "><i class="fa fa-square text-success " aria-hidden="true "></i> {{pr.projectName}} </li>
+                                        </a>
+                                        <!-- End A project -->
+                                    </ul>
+                                </div>
+                                <!-- Find people -->
+                                <div class="border-bottom " ng-show="account.length!=0 ">
+                                    <div class="card-title text-secondary pl-3 pt-2 ">People</div>
+                                    <ul class="list-group ">
+                                        <!-- A person -->
+                                        <a href="# " ng-repeat="ac in account ">
+                                            <li class="list-group-item d-flex " style="align-items: center; ">
+                                                <div class="mr-2 bg-danger rounded-circle text-center pt-1 "><span class="text-light badge badge-email ">{{ac.email.charAt(0).toUpperCase()}}</span>
+                                                </div>
+                                                <div class="text-content ">{{ac.fullname}}
+                                                    <smail style="font-style: 5px; ">{{ac.email}}</smail>
+                                                </div>
+                                            </li>
+                                        </a>
+                                        <!-- End A person -->
+                                    </ul>
+                                </div>
+                                <!-- Find TEAMS, MEMBERS -->
+                                <div class="border-bottom " ng-show="team.length!=0 ">
+                                    <div class="card-title text-secondary pl-3 pt-2 ">Teams</div>
+                                    <!-- One team -->
+                                    <ul class="list-group " ng-repeat="te in team ">
+                                        <a href=" ">
+                                            <li class="list-group-item text-content "><i class="fa fa-users text-secondary mr-2 " aria-hidden="true "></i>{{te.teamName}}</li>
+                                        </a>
+
+                                    </ul>
+                                    <!-- End one team -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                    </ul>
+                    <div class="navbar-nav text-light " style="font-size: 12px; justify-items: center; " role="alert ">
+                        <span class="pr-2 mt-1 ">14 days left in trial</span>
+                        <a class="btn-billing mr-2 text-dark" style="text-decoration: none; padding: 5px;" href="http://103.160.2.51:8080/projectmanagement/template/client/ChooseYourPlan/ChoosePlan.html">Add billing info</a>
+                        <button type="button" class="btn-infomation" id="infomation">N
+                            <label  class="label">Nha Thanh <br>My Workspace</label>
+                        </button>
+
+                        <!-- Default dropleft button -->
+
+                        <div id="info" style="display: none; ">
+                            <ul class="list-group ">
+                                <li class="list-group-item-nhathanh " style="background-color: #f9f8f8; ">My Workspace is currently in trial. <a href="# " class="text-primary ">Learn more</a> <br><i class="fas fa-clock text-secondary "></i> 14 days remaining</li>
+                                <a href="# ">
+                                    <li class="list-group-item-nhathanh hover ">My Workspace</li>
+                                </a>
+                                <a href="# ">
+                                    <li class="list-group-item-nhathanh hover ">Admin Console</li>
+                                </a>
+                                <a href="# ">
+                                    <li class="list-group-item-nhathanh hover ">My Profile</li>
+                                </a>
+                                <a onclick="logout()" href="#">
+                                    <li class="list-group-item-nhathanh hover">Logout</li>
+                                </a>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </nav>
+
+        </div>
+
+        <nav id="sidebar" class="sidebar-wrapper" ng-controller="sidebarController">
+
+            <div id="sidebarController" class="sidebar-content">
+                <div class="sidebar-brand">
+                    <div id="close-sidebar" class="mb-2">
+                        <i class="fas fa-bars btn btn-sm btn-nav text-light"></i>
+                    </div>
+                    <img class="mr-1 " src="http://103.160.2.51:8080/projectmanagement/template/images/logos/logo.png" width="25px" alt=" ">
+                    <a href="http://103.160.2.51:8080/projectmanagement/template/clienet/home.html" style="font-size: 24px;"> PMF</a>
+                </div>
+                <div class="sidebar-header">
+                    <div class="user-pic">
+                        <img class="img-responsive img-rounded border-rouded" width="" src="http://103.160.2.51:8080/pmf/pmf/getImage/{{fullname.image}}" alt="User picture">
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">
+                            <strong>{{fullname.fullname}}</strong>
+                        </span>
+                        <span class="user-role">{{fullname.account_role.roleName}}</span>
+                        <span class="user-status">
+                            <i class="fa fa-circle"></i>
+                            <span>{{fullname.status?'Online':'Disabled'}}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="m-auto"><button class="btn-create" data-toggle="dropdown" aria-haspopup="true">
+                            <i class="fa fa-plus" aria-hidden="true" style="font-size: 1.2rem;"></i>
+                            <p>Create</p>
+                            </button>
+                            <div class="dropdown-menu ml-5" style="width: 40px;">
+                                <ul class="create-somthings">
+                                    <a href="">
+                                        <li class="list-group-item-nhathanh2"><span class="fa fa-check-circle-o" aria-hidden="true"></span> Task</li>
+                                    </a>
+                                    <a href="http://103.160.2.51:8080/projectmanagement/template/client/createProject/createProject_2.html">
+                                        <li class="list-group-item-nhathanh2"><span class="fa fa-clipboard" aria-hidden="true"></span> Project</li>
+                                    </a>
+                                    <a href="">
+                                        <li class="list-group-item-nhathanh2"><span class="fa fa-weixin" aria-hidden="true"></span> Message</li>
+                                    </a>
+                                    <a href="">
+                                        <li class="list-group-item-nhathanh2"><span class="fa fa-user-plus" aria-hidden="true"></span> Invite</li>
+                                    </a>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="home.html">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                <span>My Tasks</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-bell-o" aria-hidden="true"></i>
+                                <span>Inbox</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="testRP.html">
+                                <i class="fa fa-area-chart"></i>
+                                <span>Reporting</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-grav" aria-hidden="true"></i>
+                                <span>Portfolios</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://103.160.2.51:8080/projectmanagement/template/client/meeting/create-meeting.html">
+                                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                <span>Meeting</span>
+                            </a>
+                        </li>
+                        <li class="header-menu">
+                            <span>Project &nbsp; <i class="fa fa-plus text-secondary"
+                                    onclick="window.location.href='createProject/createProject_2.html'"
+                                    style="margin:0;padding:3px;text-align:center;background-color: #3A3F48"></i></span>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-product-hunt"></i>
+                                <span>Current</span>
+                                <span class="badge badge-pill badge-warning">{{projects.length}}</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li ng-repeat="pj in pjs" ng-click="lo(pj.projectID)">
+                                        <a href="#project">{{pj.projectName}}
+                                            <span ng-if="pj.project_status.statusID == 1"
+                                                class="badge badge-pill badge-success">{{pj.project_status.statusName}}</span>
+                                            <span ng-if="pj.project_status.statusID == 2"
+                                                class="badge badge-pill badge-danger">{{pj.project_status.statusName}}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="header-menu">
+                            <span>Browse teams</span>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                <span>Request</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="#"><b>ABC</b>
+                                            <span class="badge badge-pill badge-danger">New</span>
+                                            <br>1 member <span class="text-light request">Request to Join</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><b>CCA</b>
+                                            <span class="badge badge-pill badge-danger">New</span>
+                                            <br>1 member <span class="text-light request">Request to Join</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><b>XYZ</b>
+                                            <span class="badge badge-pill badge-danger">New</span>
+                                            <br>1 member <span class="text-light request">Request to Join</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><b>UBT</b>
+                                            <span class="badge badge-pill badge-danger">New</span>
+                                            <br>1 member <span class="text-light request">Request to Join</span>
+                                        </a>
+                                    </li>
+                                    <a href="" class="text-light" id="request">Show more</a>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- sidebar-menu  -->
+            </div>
+
+            <!-- sidebar-content  -->
+            <div class="sidebar-footer">
+                <a ng-click="notificationOpen()" href="#exampleModal" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-bell"></i>
+                    <span ng-if="viewObject.newNotification > 0" class="badge badge-pill badge-warning notification">{{viewObject.newNotification}}</span>
+                </a>
+                <a ng-click="notificationPrivateOpen()" href="#privateModal">
+                    <i class="fa fa-envelope"></i>
+                    <span ng-if="viewObject.newNotification > 0" class="badge badge-pill badge-success notification">{{viewObject.newNotification}}</span>
+                </a>
+                <a ng-click="$parent.load_profile()">
+                    <i class="fa fa-cog"></i>
+                </a>
+            </div>
+            <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/notificationModal.html'" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            </div>
+            <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/notificationPrivateModal.html'" class="modal fade" id="privateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            </div>
+        </nav>
+        <div class="title-page">
+            <ul class="navbar-nav mr-auto" id="navController" ng-controller="navbarController">
+                <li class="nav-item m-2 d-flex">
+                    <h4 class="mr-2">{{$parent.project.projectName}}</h4>
+
+                    <button ng-if="$parent.project.project_status.statusID == 1" ng-click="$parent.shut_down_project($parent.project)" class="btn-share"><i class="fa fa-power-off" aria-hidden="true"></i>
+                            Shut down </button>
+                    <button ng-if="$parent.project.project_status.statusID == 2" ng-click="$parent.open_project($parent.project)" class="btn-share"><i class="fa fa-power-off" aria-hidden="true"></i>
+                            Open </button>
+                    <div class="ml-2">
+                        <button class="btn-share in-search" ng-click="forTagChip($parent.project)"><i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Share</button>
+                        <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/modalInvitation.html'" class="modal fade mt-5" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+                    </div>
+                    <div class="ml-2">
+                        <button ng-click="$parent.openModalListMember($parent.project)" class="btn-share"><i class="bi bi-person-fill" aria-hidden="true"></i>
+                            Members </button>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+        <main class="page-content-task row-columne" style="overflow-y: hidden;">
+
+            <div class="ContainerFrame row-columne mt-2 sgroup" data-project-id="{{pi}}" id="main">
+                <!-- 1 class new-columne là một cột danh sách chứa các task -->
+                <div class="new-columne columne-data sec-list" id="{{sec.sectionID}}" data-index="{{sec.sectionID}}" data-position="{{sec.sectionNumber}}" ng-repeat="sec in sections " style="background-color:#f9f8f8">
+                    <div class="header-column row-columne">
+                        <div class="columne-name mb-2 mt-2 pl-2 pr-2" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
+                            <div ng-show="check_role_member().team_role.roleID == 1">
+                                <h6  onclick="h6_into_input(this)">{{sec.sectionName}}</h6>
+                            </div>
+                            <div ng-show="check_role_member().team_role.roleID == 2">
+                                <h6  >{{sec.sectionName}}</h6>
+                            </div>
+                            
+                        </div>
+                        <div class="plush d-flex" ng-show="check_role_member().team_role.roleID == 1">
+                            <button ng-click="rename_section(sec)">
+                                <i class="fa fa-pencil-square-o  text-secondary" aria-hidden="true"></i></button>
+                            <button data-toggle="dropdown" >
+                                <i class="fa fa-ellipsis-h text-secondary" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="dropdown-menu">
+                                <button ng-click="delete_section(sec)" class="btn-remove-section dropdown-item text-danger">
+                                    <i class="fa fa-trash-o"></i>
+                                    Delete section</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list">
+                        <div class="colume-title">
+                            <div class="columne">
+                                <div class="columne-in-task tgroup" id="{{sec.sectionID}}">
+                                    <!-- 1 task list -->
+                                    <div class="task-list row" id="{{task.taskID}}" ng-repeat="task in tasks " ng-if="task.section.sectionID == sec.sectionID" data-index="{{task.taskID}}" data-position="{{task.taskNumber}}" data-section-id="{{task.section.sectionID}}" ng-dblclick="openModal(task.taskID)">
+                                        <div class="icon-task">
+                                            <svg style="color: rgb(34, 145, 76);" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512">
+                                                <title>ionicons-v5-e</title>
+                                                <path d="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48ZM218,360.38,137.4,270.81l23.79-21.41,56,62.22L350,153.46,374.54,174Z" fill="{{task.task_status.statusID != 4 ? '#C0C0C0':'#22914c'}} "></path>
+                                            </svg>
+                                        </div>
+                                        <div class="content-task">
+                                            <h6 class="border-0 textarea">&nbsp;{{task.taskName}}
+                                                <span ng-show="task.deadline == false" class="text-danger font-weight-bold">{{task.deadline == false ? '(Late)' : ''}}</span></h6>
+                                        </div>
+                                        <div class="content-task">
+                                            <h6 class="border-0 textarea">Priority: {{task.task_priority.priorityName}}</h6>
+                                        </div>
+                                        <div class="content-task">
+                                            <div ng-show="check_role_member().team_role.roleID == 1" class="d-flex justify-content-between ">
+                                                <div>
+                                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                                    <!-- <img ng-show="arrange_task_assigned(task.taskID).length != 0" src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(arrange_task_assigned(task.taskID).username)}}" width="18"> -->
+                                                    <span ng-show="arrange_task_assigned(task.taskID).length == 0" class="text2 font-weight-bold">
+                                                        None
+                                                    </span>
+                                                    <span ng-show="arrange_task_assigned(task.taskID).length != 0" class="text2 font-weight-bold">
+                                                        {{arrange_task_assigned(task.taskID).activity_category.categoryID != 22  
+                                                            ? arrange_task_assigned(task.taskID).username : 'None'}} 
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                            <div ng-show="check_role_member().team_role.roleID == 2" class="d-flex justify-content-between py-1 pt-2">
+                                                <div>
+                                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                                    <!-- <img ng-show="arrange_task_assigned(task.taskID).activity_category.categoryID == 10
+                                                    || (arrange_task_assigned(task.taskID).activity_category.categoryID == 9
+                                                    && arrange_task_assigned(task.taskID).username == check_role_member().account.username)
+                                                    " src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(arrange_task_assigned(task.taskID).username)}}" width="18"> -->
+                                                    <span class="text2 font-weight-bold">
+                                                        {{(arrange_task_assigned(task.taskID).length != 0  
+                                                            && arrange_task_assigned(task.taskID).activity_category.categoryID == 9
+                                                            && arrange_task_assigned(task.taskID).username == check_role_member().account.username) ||
+                                                            (arrange_task_assigned(task.taskID).length != 0
+                                                            && arrange_task_assigned(task.taskID).activity_category.categoryID == 10)
+                                                            ? arrange_task_assigned(task.taskID).username : 'None'}}
+                                                    </span>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="content-task mt-2 mb-1" ng-show="check_role_member().team_role.roleID == 1 
+                                        && (arrange_task_assigned(task.taskID).length != 0 && arrange_task_assigned(task.taskID).activity_category.categoryID != 22)">
+                                            <span ng-show="arrange_task_assigned(task.taskID).activity_category.categoryID == 9" class="bg-warning p-1 border-0 rounded font-weight-bold">
+                                                Waiting
+                                            </span>
+                                            <span ng-show="arrange_task_assigned(task.taskID).activity_category.categoryID == 10" class="bg-success text-white p-1 border-0 rounded font-weight-bold">
+                                                On board
+                                            </span>
+                                            <span ng-show="arrange_task_assigned(task.taskID).activity_category.categoryID == 11" class="bg-danger text-white p-1 border-0 rounded font-weight-bold">
+                                                Refused
+                                            </span>
+                                        </div>
+                                        <div class="content-task row w-100">
+                                            <span ng-show="(arrange_task_assigned(task.taskID).activity_category.categoryID == 9
+                                            && arrange_task_assigned(task.taskID).username == check_role_member().account.username)
+                                            || display_subtask(task.taskID) != false" class="mt-2 mb-1 ml-3 bg-warning p-1 border-0 col-6 rounded font-weight-bold">
+                                                        New assigment
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- End 1 task list -->
+                                </div>
+
+                                <div ng-show="check_role_member().team_role.roleID == 1" class="btn-new-task mb-5">
+                                    <button class="btn" onclick="clone_task(this)"><b>+</b> Add new task</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 1 class new-columne là một cột danh sách chứa các task (ngoại trừ thằng này!)-->
+            <div class="new-columne">
+                <div class="header-column row-columne">
+                    <div class="columne-name mb-2 mt-2 pl-2 pr-2">
+                        <div class="btn-new-section" ng-show="check_role_member().team_role.roleID == 1">
+                            <button id="btn-addSection" onclick="open_input_section(this)" class="btn" style="font-size: 14px;"><b style="font-size: 17px;">+</b> Add section</button>
+                            <input type="text" name="" id="in-nameSection" onfocusout="check_name_section(this)" placeholder="Name a section" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/modalNewTask.html'"></div>
+        <!-- <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/modalCommentTask.html'"></div>
+        <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/modalActTask.html'"></div> -->
+        <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/modalConfirm.html'"></div>
+        <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/modalListMember.html'"></div>
+        <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/modalEditSubtask.html'"></div>
+        <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/modalAllSubTask.html'"></div>
+        <!-- <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/disconnect.html'"></div> -->
+
+    </div>
+
+    <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/profile.html'"></div>
+    <!-- page-content" -->
+    <!-- page-wrapper -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <script src="http://103.160.2.51:8080/projectmanagement/template/css/client/js/jquery.js"></script>
+    <script src="http://103.160.2.51:8080/projectmanagement/template/css/client/js/home.js"></script>
+    <script src="http://103.160.2.51:8080/projectmanagement/template/css/client/js/sortable.js"></script>
+    <script src="http://103.160.2.51:8080/projectmanagement/template/pages/samples/js/check_login.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/toasty.js"></script>
+    <script src="http://103.160.2.51:8080/projectmanagement/template/css/client/js/moment.js"></script>
+    <script src="http://103.160.2.51:8080/projectmanagement/template/css/client/js/notification-tag.js"></script>
+</body>
+</html>

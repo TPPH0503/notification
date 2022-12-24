@@ -1,0 +1,93 @@
+<style>
+    .hv{
+        background-color: rgb(253, 253, 253);
+    }
+    .hv:hover{
+        background-color: #f0f2f5;
+    }
+    .vm{
+        background-color: #f0f2f5;
+    }
+    .vm:hover{
+        border: 0.5px solid rgb(226, 226, 226)
+    }
+</style>
+<div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content h-100">
+        <div class="modal-header">
+            <h4 class="modal-title fs-5" id="exampleModalLabel">Notification</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+        <div class="modal-body row p-0 m-0" style="height:580px; background-color:rgb(253, 253, 253);">
+            <div class="col-3">
+                <input id="searchProject" type="text" ng-model="searchProject" class="form-control col-12 mb-3 mt-3" placeholder="Search Project Name">
+                <div class="p-0 m-0" style="max-height:510px; overflow-y:scroll">
+                    <div ng-click="changeView(item.projectID)" ng-repeat="item in projectList | filter:searchProject"
+                        style="width:95%; cursor: pointer;"
+                        class="row mr-auto ml-auto mb-2 pb-3 pl-3 pt-3 hv rounded border">
+                        <div class="col-2 m-auto p-0 text-secondary" style="display:flex; justify-content:center">
+                            <i class="fa fa-product-hunt" style="font-size:2.5rem"></i>
+                        </div>
+                        <div class="col-10 row m-auto p-0">
+                            <div class="col-10 col pl-3 p-0 m-auto text-dark font-weight-normal" style="font-size:17px">
+                                <div class="col-12 m-auto p-0">{{item.projectName}}</div>
+                                <div class="col-12 m-auto p-0">
+                                    <span ng-if="item.project_security.securityID == 1" class="badge badge-primary"
+                                        style="font-weight:normal">{{item.project_security.securityName}}</span>
+                                    <span ng-if="item.project_security.securityID == 2" class="badge badge-danger"
+                                        style="font-weight:normal">{{item.project_security.securityName}}</span>
+                                    <span ng-if="item.project_status.statusID == 1" class="badge badge-success"
+                                        style="font-weight:normal">{{item.project_status.statusName}}</span>
+                                    <span ng-if="item.project_status.statusID == 2" class="badge badge-secondary"
+                                        style="font-weight:normal">{{item.project_status.statusName}}</span>
+                                    <span class="badge badge-info"
+                                        style="font-weight:normal">{{item.team.team_members.length}}</span>
+                                </div>
+                            </div>
+                            <div class="col-2 row m-auto">
+                                <span ng-if="item.projectNotification != 0" class="badge badge-danger"
+                                    style="font-size:13px">{{item.projectNotification}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9 pt-2 pl-2 pr-3 m-0 row" style="background-color:rgb(253, 253, 253);">
+                <input id="searchNotification" type="text" ng-model="searchNotification" class="form-control col-12 mb-3 mt-2" placeholder="Search notification">
+                <div class="font-weight-bold m-auto" style="font-size:25px;" ng-if="viewObject.view == false">
+                    Bạn chưa chọn project &nbsp; <i class="fa fa-check" style="font-size:2.5rem; height: 230px;"></i>
+                </div>
+                <div style="max-height:510px; overflow-y:scroll">
+                    <div ng-repeat="item in notificationList | filter:searchNotification | limitTo:indexNotification:0" ng-if="viewObject.view == true"
+                        style=" width: 970px; height: auto; cursor: context-menu;" class="row mr-auto ml-auto mb-1 pb-3 pt-3 hv">
+                        <div class="col-2 m-auto p-0 text-warning" style="display:flex; justify-content:center">
+                            <i class="fa fa-bell" style="font-size:25px;"></i>
+                        </div>
+                        <div class="col-10 row m-auto p-0" style="font-size:17px;">
+                            <div class="col-8 p-0 row m-auto" style="font-size:17px">
+                                <div class="col-12 text-dark font-weight-bold">{{item.activityName}}</div>
+                                <div class="col-12 text-secondary">{{item.discription}}</div>
+                            </div>
+                            <div class="col-4 m-auto p-0">
+                                <i class="far fa-clock"></i> &nbsp; {{item.startDate}}
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-click="viewMore()" ng-if="viewObject.view == true && notificationList.length > 7"
+                        style=" width: 970px; height: auto; cursor: context-menu;" class="row mr-auto ml-auto mb-1 pb-3 pt-3 vm">
+                        <div class="col-4 row m-auto p-0" style="font-size:17px;">
+                            <div class="col-5 p-0 row m-auto" style="font-size:17px">
+                                View more...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <h6><i>Click to any project to see notification</i></h6>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose your plan - PMF</title>
+    <!--Favicon-->
+    <link rel="icon" type="image/x-icon" href="http://103.160.2.51:8080/projectmanagement/template/images/logos/logo.png">
+    <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/toasty.css" rel="stylesheet" />
+
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+    <!-- Bootraps -->
+    <link rel="stylesheet" href="http://103.160.2.51:8080/projectmanagement/template/css/client/css/bootstrap4.6.2.css">
+    <link rel="stylesheet" href="http://103.160.2.51:8080/projectmanagement/template/css/client/css/plan.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body ng-app="main">
+    <nav class="navbar justify-content-between">
+        <a href="#"><img src="http://103.160.2.51:8080/projectmanagement/template/images/logos/logoNav.png" alt="" style="width: 120px;"></a>
+        <form class="form-inline">
+            <label for="" class="text-light mr-3" style="font-size: 13px;">Have questions about pricing or billing?</label>
+            <a class="btn btn-outline-light my-2 my-sm-0" href="#contact">Contact with us</a>
+        </form>
+    </nav>
+
+    <div class="content">
+        <div class="title">
+            <p style="font-size: 48px;line-height: 56px;">Select your plan</p>
+            <p style="color:   #68696a;"> Your trial has ended. Pick a plan today to avoid interruptions to your work</p>
+        </div>
+        <div class="plan d-flex">
+            <div class="card text-center w-50" style="border: 1px solid #406cc7;">
+                <div class="card-header topic-plan text-light">
+                    Recommended based on usage
+                </div>
+                <div class="card-body">
+                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" name="myForm" ng-controller="FormCtrlEUR">
+                        <h5 class="card-title">
+                            <img class="Illustration Illustration--xsmall Illustration--spot" alt="" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/a91a8cd914ebd2c9bf5db4059e92e534a5e2c5e9/Premium-tier-icon@3x.png">
+                            <p>Premium</p>
+                        </h5>
+                        <div class="price m-3 p-4 row" style="text-align: center;justify-content: center;">
+                            <input ng-required="true" checked type="radio" name="amount" id="sizeSmall" value="15" required style="display: none;" />
+                            <label for="sizeSmall"><span class="" style="font-size:2.2rem;">15$</span> </label>
+                            <div class="ml-3">
+                                <span>USD / seat / month</span>
+                                <p class="text-secondary">when billed annually</p>
+                            </div>
+                        </div>
+                        <div>
+                            <input type="hidden" name="cmd" value="_xclick">
+                            <input type="hidden" name="business" value="office@goapp.ro">
+                            <input type="hidden" name="item_name" value="Donation to Fundatia KIWI Casa Bucuriei">
+                            <input type="hidden" name="item_number" value="11"></option>
+                        </div>
+
+                        <input type="hidden" name="no_shipping" value="0">
+                        <input type="hidden" name="no_note" value="1">
+                        <input type="hidden" name="currency_code" value="USD">
+                        <input type="hidden" name="lc" value="AU">
+                        <input type="hidden" name="bn" value="PP-BuyNowBF">
+                        <input type="hidden" name="return" value="http://127.0.0.1:5502http://103.160.2.51:8080/projectmanagement/template/client/home.html">
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <input type="submit" value="Select Premium" class="btn login_btn btn text-light btn-select-predium ">
+                        </div>
+                    </form>
+
+                    <div class="track-team p-3">
+                        <ul class="text-left">
+                            <p class="">Track team projects with features like:</p>
+                            <li>Timeline</li>
+                            <li>Custom Fields</li>
+                            <li>Workflow Builder</li>
+                            <li>Rules</li>
+                            <li>Dashboards</li>
+                            <li>Unlimited free guests</li>
+                            <li>Forms</li>
+                            <li>Advanced search</li>
+                            <li>Milestones</li>
+                            <li>Admin Console</li>
+                            <li>Private teams & projects</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card text-center w-50" style="border: 1px solid #406cc7;margin-top: 60px;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <img class="Illustration Illustration--xsmall Illustration--spot" alt="" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/9122c149b240893d5a2d320bc7b3bc6067e83bbc/Enterprise-tier-icon@3x.png">
+                        <p>Enterprise</p>
+                    </h5>
+                    <div class="price m-3 p-4 row" style="text-align: center;justify-content: center;">
+                        <p class="text-secondary" style="font-size: 20px;">Let's talk!</p>
+                    </div>
+                    <a href="#contact" class="btn btn-contact" style="border: 1px solid #426ec7; width: 85%;
+                    height: 48px; font-size: 18px;justify-items: center; align-items: center;margin-top: 15px;">Contact us</a>
+                    <div class="track-team p-3">
+                        <ul class="text-left">
+                            <p class="">Everything in Business, plus:</p>
+                            <li>SAML</li>
+                            <li>User and group provisioning & deprovisioning (SCIM)</li>
+                            <li>Audit Log API (built to support SIEM)</li>
+                            <li>Cross region backups</li>
+                            <li>Block integrations</li>
+                            <li>Admin announcements</li>
+                            <li>Custom branding</li>
+                            <li>Service accounts</li>
+                            <li>24/7 support</li>
+                        </ul>
+                        <input type="checkbox" ng-model="contact" style="display: none;" id="show"></input>
+                        <label for="show"><a href="#contact">Send your request for us</a></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contact p-5" id="contact" ng-controller="controller">
+            <hr>
+            <h2 class="text-center mb-5" style="color: #68696a;">Send request to us</h2>
+            <form name="myForm" class="form" id="test-form" action="https://script.google.com/macros/s/AKfycby5i7Du2XI8COe3HyhnE_kkcXG3LGfSHCkwOHD9LEIaHP1W-hm2Qu419A8X374JofwI/exec" method="get">
+                <div class="row">
+                    <div class="col-lg-6 form-group">
+                        <label for="">Your name</label>
+                        <input name="Name" class="form-control" placeholder="Name*" type="text" ng-model="" required/>
+                    </div>
+                    <div class="col-lg-6 form-group">
+                        <label for="">Information contact (email, number phone)</label>
+                        <input name="Email" class="form-control" placeholder="Email*" type="email" ng-model="" required/>
+                    </div>
+                    <div class="col-lg-12">
+                        <label for="">Your request</label>
+                        <textarea rows="8" name="CustomerMessages" class="form-control" ng-model="send.content" placeholder="Your Message*" required></textarea>
+                    </div>
+                    <div class="m-auto">
+                        <button class="btn btn-contact mt-5" style="border: 1px solid #406cc7; width: 350px;" type="submit" id="submit-form" ng-disabled="myForm.$toucher">Send Message</button>
+                    </div>
+                </div>
+            </form>
+            <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    var submit = $("button[type='submit']");
+                    submit.click(function() {
+                        var data = $('form#test-form').serialize();
+                        $.ajax({
+                            type: 'GET',
+                            url: 'https://script.google.com/macros/s/AKfycby5i7Du2XI8COe3HyhnE_kkcXG3LGfSHCkwOHD9LEIaHP1W-hm2Qu419A8X374JofwI/exec',
+                            dataType: 'json',
+                            crossDomain: true,
+                            data: data,
+                            success: function(data) {
+                                if (data == 'false') {
+                                    alert('Send to your reqest not successfully. Contact Dukenguyen2612@gmail.com!');
+                                } else {
+                                    alert('Your request was send to us! Thanks you!');
+                                }
+                                location.reload();
+                            }
+                        });
+                        return false;
+                    });
+                });
+            </script>
+        </div>
+        <hr class="">
+        <footer class="m-auto ">
+            <h3 class="text-center">Loved by 100,000+ organizations across the globe</h3>
+            <div class="brands" style="margin-top: 90px;">
+                <div class="brand">
+                    <img class="BillingLogoSection-logoImg" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/ae106524a35dd494d7bec6264e90f144a09c08da/440px-Danone_logo 1.svg" alt="Danone Logo">
+                </div>
+                <div class="brand">
+                    <img class="BillingLogoSection-logoImg" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/8b458424206233e8403f72b2f98ee58cc1a8baff/deloitte.svg" alt="Danone Logo">
+                </div>
+                <div class="brand">
+                    <img class="BillingLogoSection-logoImg" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/c1dc8cfa0f91f76528d3b9bd2c1d1f479ad44f76/nasa.svg" alt="Danone Logo">
+                </div>
+                <div class="brand">
+                    <img class="BillingLogoSection-logoImg" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/0d5203027a3c42438116f4f41d00d5d8b3a6104c/United Way.svg" alt="Danone Logo">
+                </div>
+                <div class="brand">
+                    <img class="BillingLogoSection-logoImg" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/20bd19dbd6d460081743eff4dc3f0c1c2be58b43/general-electric.svg" alt="Danone Logo">
+                </div>
+                <div class="brand">
+                    <img class="BillingLogoSection-logoImg" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/20bd19dbd6d460081743eff4dc3f0c1c2be58b43/general-electric.svg" alt="Danone Logo">
+                </div>
+                <div class="brand">
+                    <img class="BillingLogoSection-logoImg" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/e899011aa73d8abfefac976d3ffc4461d26bb296/usaid.svg" alt="Danone Logo">
+                </div>
+                <div class="brand">
+                    <img class="BillingLogoSection-logoImg" src="https://d3ki9tyy5l5ruj.cloudfront.net/obj/a55bcbd5c0988d1a8846fcf33e7c9238ed1d127a/new-york-times.svg" alt="Danone Logo">
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    const app = angular.module("main", []);
+    app.controller("controller", ($scope) => {
+
+    })
+</script>
+
+</html>

@@ -1,0 +1,229 @@
+<style>
+  .rem:hover{
+    text-decoration: none;
+  }
+  .vie:hover{
+    text-decoration: none;
+  }
+</style>
+<div class="modal fade bd-example-modal-xl" id="modalListMember" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Project's Member List</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body bg-light">
+        <div class="container-fluid">
+            <div class="row">
+              
+                <div class="col-md-4 p-0">
+                    <div class="form-group mb-2 p-0 m-0">
+                      <input id="searchMember" type="text" ng-model="searchMember" ng-keyup="findMember($parent.project)" class="form-control col-7" placeholder="Search">
+                    </div>
+                  <div class="mb-4" style="min-height: 475px; max-height: 475px; overflow-y: scroll;">
+                    <div class="card mt-2 mb- col-11" ng-repeat="mb in listProjectMember | limitTo:4:index">
+                        <div class="row g-0">
+                          <div class="col-md-4 p-1">
+                            <img class="img-responsive img-rounded border-rouded rounded-start" style="width: 100px; height: 100px; object-fit: cover;" src="http://103.160.2.51:8080/pmf/pmf/getImage/{{mb.account.image}}" alt="User picture">
+                          </div>
+                          <div class="col-md-8 pl-1">
+                            <div class="card-body pt-2 p-1">
+                              <h5 class="card-title" style="margin-bottom: 0;">{{mb.account.username}}  <code ng-show="mb.account.username == myselfRP">(You)</code></h5>
+                              <p class="card-text" style="margin-bottom: 7px;">{{mb.account.fullname}}</p>
+
+                              <a class="card-text text-danger rem"
+                              ng-show="check_role_member().team_role.roleID == 1 && check_role_member().account.username != mb.account.username"
+                              ng-click="$parent.removeMember($parent.project.projectID, mb.account.username)"
+                              style="margin-left: 80px; font-size: 17px; cursor: pointer;">Remove</a>
+
+                              <span class="card-text rem text-muted"
+                              ng-show="check_role_member().team_role.roleID == 1 && check_role_member().account.username == mb.account.username" 
+                              style="margin-left: 80px; font-size: 17px; cursor: no-drop;">Remove</span>
+
+                              <!-- <a class="card-text vie" ng-click="$parent.showMemberRP($parent.project, mb.account.username)" style="cursor: pointer; margin-left: 5px; font-size: 17px;">View</a> -->
+                              <a class="card-text vie btn btn-info" ng-click="$parent.showMemberRP_Task($parent.project, mb.account.username)" style="cursor: pointer; margin-left: 5px; font-size: 17px;">View</a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+
+                  <!-- Start Pagination custom button group -->
+                    <nav class="">
+                      <ul class="pagination">
+                          <li class="page-item">
+                              <a class="page-link" ng-click="first()">First</a>
+                          </li>
+                        <li class="page-item">
+                          <a class="page-link" ng-click="prev()">Prev</a>
+                        </li>
+
+                        <li class="page-item disabled" ng-show="pageNumber > 3">
+                          <a class="page-link">...</a>
+                        </li>
+
+                        <li class="page-item" ng-show="pageNumber <= 4 && pageNumber > 1"><a class="page-link" ng-click="number(1)">1</a></li>
+                        <li class="page-item active" ng-show="pageNumber==1"><a class="page-link" ng-click="number(1)">1</a></li>
+                        <li class="page-item" ng-show="pageNumber > 4"><a class="page-link" ng-click="number(pageNumber - 1)">{{pageNumber - 1}}</a></li>
+
+                        <li class="page-item active" ng-show="pageNumber==2"><a class="page-link" ng-click="number(2)">2</a></li>
+                        <li class="page-item" ng-show="pageNumber <= 4 && pageNumber >= 1 && pageNumber != 2"><a class="page-link" ng-click="number(2)">2</a></li>
+                        <li class="page-item active" ng-show="pageNumber > 4" aria-current="page">
+                          <a class="page-link" ng-click="number(pageNumber)">{{pageNumber}}</a>
+                        </li>
+
+                        <li class="page-item" ng-show="totalPage > 2 && pageNumber > 4">
+                          <a class="page-link" ng-click="number(pageNumber + 1)">{{pageNumber + 1}}</a>
+                        </li>
+                        <li class="page-item" ng-show="totalPage > 2 && pageNumber < 3">
+                          <a class="page-link" ng-click="number(3)">3</a>
+                        </li>
+                        <li class="page-item active" ng-show="totalPage > 2 && pageNumber == 3">
+                          <a class="page-link" ng-click="number(3)">3</a>
+                        </li>
+                        
+                        
+                        <li class="page-item disabled &&" ng-show="totalPage > 2 && pageNumber > 3">
+                          <a class="page-link">...</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" ng-click="next()">Next</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" ng-click="last()" >Last</a>
+                        </li>
+                      </ul>
+                    </nav>
+                <!-- End Pagination custom button group -->
+
+                </div>
+
+                <div class="col-md-8" style="height: 470px;">
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist" ng-show="$parent.checkClickRP == true">
+
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Task</button>
+                      </li>
+
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="home-tab" data-toggle="tab" data-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Sub Task</button>
+                      </li>  
+
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="table-tab" data-toggle="tab" data-target="#table" type="button" role="tab" aria-controls="table" aria-selected="true">Assignee</button>
+                      </li>  
+
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="table-tab" data-toggle="tab" data-target="#late" type="button" role="tab" aria-controls="table" aria-selected="true">Overdue</button>
+                      </li>  
+
+                    </ul>
+
+                    <div class="tab-content pt-2" id="myTabContent" ng-show="$parent.checkClickRP == true">
+
+                        <div class="tab-pane show fade active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                          <h4 ng-show="$parent.checkClickRPCol == false" class="text-center" style="margin-top: 28%;">This member don't have any task!</h4>
+                            <figure class="highcharts-figure" ng-show="$parent.checkClickRPCol == true">
+                                <div id="container2"></div>
+                                <p class="highcharts-description mt-2">
+                                    A variation of a 3D pie chart with an inner radius added.
+                                    These charts are often referred to as donut charts.
+                                </p>
+                            </figure>
+                        </div>
+
+                        <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                          <h4 ng-show="$parent.checkClickRPPie == false" class="text-center" style="margin-top: 28%;">This member don't have any sub task!</h4>
+                            <figure class="highcharts-figure" ng-show="checkClickRPPie == true">
+                                <div id="container"></div>
+                                <p class="highcharts-description">
+                                    A variation of a 3D pie chart with an inner radius added.
+                                    These charts are often referred to as donut charts.
+                                </p>
+                            </figure>
+                        </div>
+
+                        <div class="tab-pane fade" id="table" role="tabpanel" aria-labelledby="profile-tab">
+                          <h4 ng-show="$parent.listAssigneeNumber == 0" class="text-center" style="margin-top: 28%;">This member don't have any assignee!</h4>
+                          <div ng-show="$parent.listAssigneeNumber > 0">
+                            <div class="d-flex bd-highlight">
+                              <div class="mr-auto bd-highlight p-0" style="line-height: 45px;">
+                                <span class="col-3 font-weight-bold">Amount: <i class="text-primary">{{listAssigneeNumber}}</i> activities</span>
+                              </div>
+                              <div class="bd-highlight col-3">
+                                <select class="form-control col-12" id="sttAssignee" ng-model="selectedC" ng-change="selectedCat()">
+                                  <option value="2">Accepted</option>
+                                  <option value="1">Assigned</option>
+                                  <option value="3">Refused</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="row p-0 m-0" style="max-height: 430px; overflow-y: scroll;">
+                              <table class="table">
+                              <thead class="table-dark">
+                                <tr >
+                                  <th scope="col">Cate</th>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">Date</th>
+                                  <th scope="col">Description</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr ng-repeat="act in listAssignee | filter:{stt: selectedC}">
+                                  <td>{{act.cate?'Task':'Subtask'}}</td>
+                                  <td>{{act.name}}</td>
+                                  <td>{{act.date|date:'dd/MM/yyyy hh:mm'}}</td>
+                                  <td class="text-info" ng-show="act.stt==1">Assigned</td>
+                                  <td class="text-success" ng-show="act.stt==2">Accepted</td>
+                                  <td class="text-danger" ng-show="act.stt==3">{{act.description!=null?act.description:'Refused'}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="late" role="tabpanel" aria-labelledby="profile-tab">
+                          <h4 ng-show="$parent.listAssigneeNumber == 0" class="text-center" style="margin-top: 28%;">This member don't have any overdue task!</h4>
+                          <div ng-show="$parent.listAssigneeNumber > 0">
+                            <div class="d-flex bd-highlight">
+                              <div class="mr-auto bd-highlight p-0" style="line-height: 45px;">
+                                <span class="col-3 font-weight-bold">Amount: <i class="text-primary">{{listOverdueNumber}}</i> activities</span>
+                              </div>
+                            </div>
+                            <div class="row p-0 m-0" style="max-height: 430px; overflow-y: scroll;">
+                              <table class="table">
+                              <thead class="table-dark">
+                                <tr>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">Date</th>
+                                  <th scope="col">Description</th>
+                                  <th scope="col">Status</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr ng-repeat="ovd in listOverdue">
+                                  <td>{{ovd.name}}</td>
+                                  <td>{{ovd.date|date:'medium'}}</td>
+                                  <td>{{ovd.description}}</td>
+                                  <td class="text-danger">{{ovd.stt!=1?'Overdue':'Oke'}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>

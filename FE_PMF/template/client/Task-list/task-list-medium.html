@@ -1,0 +1,11 @@
+<ul ng-if="taskMediumData.length > 0" class="list-group">
+    <div class="d-flex" style="align-items: center;" ng-repeat="ts in taskMediumData">
+        <i class="fa fa-check-circle-o text-warning p-2" aria-hidden="true"></i>
+        <li class="list-group-item w-100 border-0"> <strong>{{ts.taskName}}</strong> &nbsp; | &nbsp; Status: {{ts.task_status.statusName}}</li>
+    </div>
+</ul>
+<ul ng-if="taskMediumData.length <= 0" class="list-group">
+    <span class="w-100 font-weight-bold centerElement" style="font-size:15px;height:50px">
+        Oop!! Nothing to see here :) <i class="fa fa-empty-set"></i>
+    </span>
+</ul> 

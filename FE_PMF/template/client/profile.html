@@ -1,0 +1,95 @@
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="profileSetting modal-dialog modal-xl modal-dialog-centered" style="height:75%" role="document">
+        <div class="modal-content">
+            <div class="modal-body rounded bg-white">
+                <div class="row">
+                    <div class="col-md-4 border-right">
+                        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+        
+                            <img class=" mt-5" id="avatarProfile" width="220px" height="218px" alt="Please reload this page to see image!" style="object-fit: cover;" src="http://103.160.2.51:8080/pmf/pmf/getImage/{{account.image}}">
+        
+                            <!-- <img class="rounded-circle mt-5" width="220px" src="https://s120-ava-talk.zadn.vn/1/5/7/6/1/120/c3cb7357efc7c3d7cd05403fcee554c7.jpg"> -->
+                            <span>{{account.image}}</span>
+                            <br>
+                            <form name="myImage">
+                                <label class="form-label" for="customFile">Upload Your Image</label>
+                                <input type="file" id="imgInpProfile" name="myFile" ng-required="true" style="height: max-content; padding-left: 6px;" class="centerElement form-control" multiple accept="image/*" onchange="angular.element(this).$rootScope.fileUp(this.files, this)" id="customFile" />
+                                <span class="err" ng-show="myImage.myFile.$touched && myImage.myFile.$error.required">Please choose your image!</span>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="p-3 py-5">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="text-right">Your Profile</h4>
+                            </div>
+                            <form name="myForm">
+                                <div class="row mt-2">
+                                    <div class="col-md-5">
+                                        <label class="labels">Username</label>
+                                        <input type="text" readonly class="form-control" value="{{account.username}}">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label class="labels">Fullname</label>
+                                        <input type="text" name="myFullname" ng-pattern="/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/i" ng-required="true" class="form-control" ng-model="account.fullname">
+                                        <span class="err" ng-show="myForm.myFullname.$touched && myForm.myFullname.$error.required">Please enter your fullname.</span>
+                                        <span class="err" ng-show="myForm.myFullname.$touched && myForm.myFullname.$error.pattern">
+                                            Fullname is invalid!
+                                            </span>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-5">
+                                        <label class="labels">Mobile Number</label>
+                                        <input type="text" name="myPhone" ng-required="true" ng-pattern="/^(0|84)(2(0[3-9]|1[0-6|8|9]|2[0-2|5-9]|3[2-9]|4[0-9]|5[1|2|4-9]|6[0-3|9]|7[0-7]|8[0-9]|9[0-4|6|7|9])|3[2-9]|5[5|6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])([0-9]{7})$/" class="form-control"
+                                            ng-model="account.phone">
+                                        <span class="err" ng-show="myForm.myPhone.$touched && myForm.myPhone.$error.required">Please enter your phone number.</span>
+                                        <span class="err" ng-show="myForm.myPhone.$touched && myForm.myPhone.$error.pattern">
+                                            Phone number is invalid!
+                                        </span>
+                                    </div>
+                                    <div class="col-md-5 pr-0">
+                                        <label class="labels">Email</label>
+                                        <input type="email" ng-change="$parent.checkemailfor_check_updateProfile()" name="myEmail" ng-required="true" ng-pattern="/^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/" class="form-control" ng-model="account.email">
+                                        <span class="err" ng-show="myForm.myEmail.$touched && myForm.myEmail.$error.required">Please enter your email.</span>
+                                        <span class="err" ng-show="myForm.myEmail.$touched && myForm.myEmail.$error.pattern">
+                                            Email is invalid!
+                                        </span>
+                                    </div>
+                                    <div class="col-md-2 pt-1">
+                                        <button ng-show="account.email != verifiedEmail && !myForm.myEmail.$error.pattern" class="btn btn-info mt-4 col-12" ng-click="verifyEmail(account.email)">Verify</button>
+                                        <button ng-show="account.email == verifiedEmail && !myForm.myEmail.$error.pattern" class="btn btn-success disabled mt-4 col-12"><i class="fa fa-check"></i></button>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-12">
+                                        <label class="labels">Address</label>
+                                        <input type="text" name="myAddress" ng-required="true" ng-pattern="/^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ'\.\-\s\,]+)$/i" class="form-control"
+                                            ng-model="account.address">
+                                        <span class="err" ng-show="myForm.myAddress.$touched && myForm.myAddress.$error.required">Please enter your address.</span>
+                                        <span class="err" ng-show="myForm.myAddress.$touched && myForm.myAddress.$error.pattern">
+                                            Address is invalid!
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-5"><label class="labels">Account Role</label><input type="text" readonly class="form-control" value="{{account.account_role.roleName}}"></div>
+                                    <div class="col-md-7"><label class="labels">Status</label><input type="text" readonly class="form-control" value="{{account.status==1?'Trial Version':account.status==2?'Premium Version':'Vô Hiệu Hóa'}}"></div>
+                                </div>
+                                <div class="mt-5 text-center">
+                                    <button ng-show="account.email == verifiedEmail && !myForm.$error.required && !myImage.$error.required && abc == true" style="height: 43px;" class="btn btn-dark col-12" ng-click="update_profile()" type="button">Save Your Profile</button>
+                                    <span class="err" style="font-size: 20px;" ng-show="myForm.$error.required">
+                                        Enter all valid value to update your profile!
+                                    </span>
+                                    <span class="err" style="font-size: 20px;" ng-show="!myForm.$error.required && account.email != verifiedEmail">
+                                        Please verify your email to add to your profile!
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

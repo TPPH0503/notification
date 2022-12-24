@@ -1,0 +1,14 @@
+<div class="col-12 createProject">
+    <button class="w-100" onclick="window.location.href='http://103.160.2.51:8080/projectmanagement/template/client/createProject/createProject_2.html'"><i style="font-size: 2.5rem;" class="fa fa-plus p-3" aria-hidden="true"></i> Create Project</button>
+</div>
+<div class="col-12 btn-in-project" ng-repeat="pr in projectUnactiveData">
+    <button ng-click="redirectToProject(pr.projectID)" class="w-100" >
+        <div>  
+            <i style="font-size: 2.5rem;"class="fa fa-registered p-3" aria-hidden="true"></i>
+        </div>
+        <div>
+            <div class="title-project">{{pr.projectName}}</div> 
+            <small class="sub-project text-secondary">{{pr.team.teamName}}</small>
+        </div>
+    </button>
+</div>

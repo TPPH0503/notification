@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Register - PMF</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="http://103.160.2.51:8080/projectmanagement/template/images/logos/logo.png" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="http://103.160.2.51:8080/projectmanagement/template/css/client/js/register.js"></script>
+
+</head>
+
+<body ng-app="apps" ng-controller="register">
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-center auth px-0">
+                <div class="row w-100 mx-0">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                            <h1 class="text-center">REGISTER</h1>
+
+                            <form class="pt-3" name="myForm">
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                        <h4>Your information</h4>
+                                        <div class="form-row mt-3">
+                                            <div class="form-group col-6">
+                                                <input type="text" name="myUN" class="form-control" ng-change="checkExist()" ng-required="true" ng-model="account.username" ng-pattern="/^[a-z0-9_-]{6,12}$/" placeholder="Username">
+                                                <span class="err" ng-show="myForm.myUN.$touched && stt == false" style="color: red;">Username has exists!</span>
+                                                <span class="text-success" ng-show="myForm.myUN.$touched && stt == true && !myForm.myUN.$error.required && !myForm.myUN.$error.pattern">Username avalible!</span>
+                                                <span class="err" ng-show="myForm.myUN.$touched && myForm.myUN.$error.required" style="color: red;">Please enter your username.</span>
+                                                <span class="err" ng-show="myForm.myUN.$touched && myForm.myUN.$error.pattern" style="color: red;">Username is invalid!</span>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <input type="text" name="myFullname" ng-pattern="/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/i" ng-required="true" class="form-control" ng-model="account.fullname"
+                                                    placeholder="Fullname" />
+                                                <span class="err" ng-show="myForm.myFullname.$touched && myForm.myFullname.$error.required" style="color: red;">Please enter your fullname.</span>
+                                                <span class="err" ng-show="myForm.myFullname.$touched && myForm.myFullname.$error.pattern" style="color: red;">Fullname is invalid!</span>
+                                                <span class="text-success" ng-show="myForm.myFullname.$touched && stt == true && !myForm.myFullname.$error.required && !myForm.myFullname.$error.pattern">Fullname avalible!</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-6">
+                                                <input type="email" name="myEmail" ng-required="true" ng-pattern="/^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/" class="form-control" ng-model="account.email" placeholder="Your Email " value="" ng-change="checkemail()" />
+                                                <span class="err" ng-show="myForm.myEmail.$touched && abc == false" style="color: red;">Email has exists!</span>
+                                                <span class="text-success" ng-show="myForm.myEmail.$touched && abc == true && !myForm.myEmail.$error.required && !myForm.myEmail.$error.pattern">Email avalible!</span>
+                                                <span class="err" ng-show="myForm.myEmail.$touched && myForm.myEmail.$error.required" style="color: red;">Please enter your email.</span>
+                                                <span class="err" ng-show="myForm.myEmail.$touched && myForm.myEmail.$error.pattern" style="color: red;">Email is invalid!</span>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <input type="text" name="myPhone" ng-required="true" ng-pattern="/^(0|84)(2(0[3-9]|1[0-6|8|9]|2[0-2|5-9]|3[2-9]|4[0-9]|5[1|2|4-9]|6[0-3|9]|7[0-7]|8[0-9]|9[0-4|6|7|9])|3[2-9]|5[5|6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])([0-9]{7})$/" class="form-control"
+                                                    ng-model="account.phone" placeholder="Number phone" />
+                                                <span class="err" ng-show="myForm.myPhone.$touched && myForm.myPhone.$error.required" style="color: red;">Please enter your phone number.</span>
+                                                <span class="err" ng-show="myForm.myPhone.$touched && myForm.myPhone.$error.pattern" style="color: red;">Phone number is invalid!</span>
+                                                <span class="text-success" ng-show="myForm.myPhone.$touched && stt == true && !myForm.myPhone.$error.required && !myForm.myPhone.$error.pattern">Number phone avalible!</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <h4>Address</h4>
+                                            <div class="billing-info col-lg-12 mt-3 p-4 rounded" style="border:1px solid rgb(221, 212, 212)">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <select name="cty" ng-model="ctyChooser" class="form-select form-control" id="floatingSelectCty" aria-label="Floating label select example">
+                                                            <option value="" ng-if="ctyChooser==undefined">Chooser your Cty</option>
+                                                            <option ng-click="getCtys($index)" ng-repeat="cty in local">{{cty.name}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <select name="distrists" ng-model="distristsChooser" class="form-select form-control" aria-label="Floating label select example">
+                                                            <option value="" ng-if="distristsChooser==undefined">Chooser your Districts</option>
+                                                            <option ng-repeat="dis in districts" ng-click="getDistricts($index)">{{dis.name}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3"></div>
+                                                <div class="row">
+                                                    <div class=" col-lg-6">
+                                                        <select name="ward" ng-model="wardChooser" class="form-select form-control" id="" aria-label="Floating label select example">
+                                                            <option value="" ng-if="wardChooser==undefined">Chooser your Wards</option>
+                                                            <option ng-repeat="wa in wards" ng-click="getWard(wa.prefix,wa.name)">{{wa.prefix}} {{wa.name}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class=" col-lg-6">
+                                                        <select name="streets" ng-model="streetsChooser" class="form-select form-control" id="" aria-label="Floating label select example">
+                                                            <option value="" ng-if="streetsChooser==undefined">Chooser your Streets</option>
+                                                            <option ng-repeat="st in streets" ng-click="getStreet(st.prefix,st.name)">{{st.prefix}} {{st.name}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="text-danger" ng-show="ctyChooser=='' || distristsChooser==''||wardChooser==''||streetsChooser==''">Please enter your valid address!</span>
+                                            <span class="text-success" ng-show="ctyChooser!=undefined && distristsChooser!=undefined && wardChooser!=undefined &&streetsChooser!=undefined">Your address available!</span>
+                                        </div>
+                                        <div class="m-3">
+                                            <input type="checkbox" id="accept" name="accept" ng-model="accept">
+                                            <label for="accept"><small class="text-gray">Accept all terms of PMF when registering to use the application</small></label>
+                                        </div>
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="nav-item">
+                                                <button class="btn btn-primary" ng-disabled="myForm.myUN.$invalid||myForm.myFullname.$invalid||myForm.myEmail.$invalid ||
+                                                ctyChooser==undefined || distristsChooser==undefined||wardChooser==undefined||streetsChooser==undefined || !accept==true" style="width: 200px;" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
+                                                    role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" name="passwords" ng-model="account.pass" class="form-control" id="inputPassword" placeholder="•••••••••••••••••">
+                                                <span class="text-danger fst-italic" ng-show="myForm.account.pass.$touched && account.pass.$error.pattern">Minimum eight and maximum 10 characters, at least one uppercase letter, one lowercase letter, one number and one special character</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputConfirm" class="col-sm-2 col-form-label">Confirm Password</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" name="confirm" class="form-control" ng-model="passwordConfirm" id="inputConfirm" placeholder="•••••••••••••••••">
+                                                <span class="text-danger fst-italic" ng-show="passwordConfirm!=account.pass && myForm.confirm.$touched">Your password confirm not correct try again!</span>
+                                            </div>
+                                        </div>
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="btn btn-light" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa fa-hand-o-left" aria-hidden="true"></i></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <button ng-click="sendMailVerify(account.email)" class="btn btn-primary" ng-disabled="passwordConfirm=='' || passwordConfirm ==undefined || passwordConfirm != account.pass" id="pills-mail-tab" data-toggle="pill" href="#pills-sendMail" role="tab" aria-controls="pills-mail"
+                                                    aria-selected="true"><i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-sendMail" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                        <div>
+                                            <h1>Verify account via gmail</h1>
+                                            <div class="col-5 mt-4">
+                                                <input type="number" class="form-control" id="codeverify" ng-model="codeEnter">
+                                                <label for="codeverify" class="text-gray mt-3 mb-3">Confirm your code verify we sent to you</label>
+                                            </div>
+                                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="btn btn-light" id="pills-back-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa fa-hand-o-left" aria-hidden="true"></i></a>
+                                                </li>
+                                                <div class="form-group" ng-disabled="!myForm.$error.required && !myImage.$error.required && stt == true && confirmPassword == account.pass">
+                                                    <button name="btnSubmit" class="btn btn-primary" ng-click="create()" ng-disabled="codeEnter != codeVerify" style="width: 150px;">Register</button>
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="text-center mt-4 font-weight-light">
+                                Already have an account? <a href="login.html" class="text-primary">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+</body>
+
+
+<!-- base:js -->
+<script src="../../vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- inject:js -->
+<script src="../../js/off-canvas.js"></script>
+<script src="../../js/hoverable-collapse.js"></script>
+<script src="../../js/template.js"></script>
+<script src="../../js/settings.js"></script>
+<script src="../../js/todolist.js"></script>
+
+<!-- endinject -->
+
+</html>

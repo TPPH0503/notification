@@ -1,0 +1,291 @@
+<!-- Modal -->
+<div class="modal fade" id="testModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" id="task-content">
+            <div class="modal-header">
+                <div class="modal-title" id="taskModalLabel">
+                    <button class="btn-markcome"><i class="fa fa-check" aria-hidden="true"></i>
+                    Mark complete</button>
+                </div>
+
+                <button type="button" class="close" data-dismiss="modal" onclick="hideTableUploadFile()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="private row-columne">
+                <div>
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                </div>
+                <div>
+                    This task is private to you
+                </div>
+                <div class="option-task ml-auto" style="float: right;">
+                    <button class="public">Make Public</button>
+                    <button class="private" type="hidden" style="display: none;">Make Private</button>
+                    <button data-toggle="dropdown">
+                        <i class="fa fa-ellipsis-h text-secondary" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button ng-click="deleteTask(0)" data-dismiss="modal" class="dropdown-item text-danger">
+                            <i class="fa fa-trash-o"></i>
+                            Delete this task</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" id="modal-task">
+                <div class="row"></div>
+                <div class="task-content">
+                    <h4 class="task-name">{{task.taskName}} <span ng-show="task.deadline == false" 
+                        class="text-danger font-weight-bold">{{task.deadline == false ? '(Late)' : ''}}</span></h4>
+                </div>
+                <div>
+                    <div class="row-columne m-3">
+                        <div class="col-2 text-secondary">Assignee</div>
+                        <div class="dropdown">
+                            <button ng-show="check_role_member().team_role.roleID == 1" class="btn-assignee dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i ng-show="arrange_task_assigned(task.taskID).length == 0" 
+                                                    class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                <img ng-show="arrange_task_assigned(task.taskID).length != 0"  src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(arrange_task_assigned(task.taskID).username)}}" width="18">
+                                 &nbsp;{{arrange_task_assigned(task.taskID).length != 0  ? arrange_task_assigned(task.taskID).username : 'None'}} 
+                            </button>
+                            <button disabled ng-show="check_role_member().team_role.roleID == 2" class="btn-assignee dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i ng-show="arrange_task_assigned(task.taskID).activity_category.categoryID != 10 " 
+                                                    class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                <img ng-show="arrange_task_assigned(task.taskID).activity_category.categoryID == 10"  
+                                src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(arrange_task_assigned(task.taskID).username)}}" width="18">
+                                 &nbsp;{{(arrange_task_assigned(task.taskID).length != 0  
+                                    && arrange_task_assigned(task.taskID).activity_category.categoryID == 9
+                                    && arrange_task_assigned(task.taskID).username == check_role_member().account.username) ||
+                                    (arrange_task_assigned(task.taskID).length != 0
+                                    && arrange_task_assigned(task.taskID).activity_category.categoryID == 10)
+                                    ? arrange_task_assigned(task.taskID).username : 'None'}} 
+                            </button>
+
+                            <div class="dropdown-menu drop-assignee" aria-labelledby="dropdownMenuButton">
+                                <input type="text" ng-model="query">
+                                <a ng-repeat="mem in ac_members | filter:query" ng-click="assigned_task_to_so(mem.username,task.taskID,project.projectID)"    class="dropdown-item">
+                                    <img  src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(mem.username)}}" width="18">
+                                    <span >{{mem.email}}&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;{{mem.username}}</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div ng-show="check_role_member().team_role.roleID == 1">
+                            <div ng-show="arrange_task_assigned(task.taskID).activity_category.categoryID == 9">
+                                <h6 class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Waiting </div>
+                            <div ng-show="arrange_task_assigned(task.taskID).activity_category.categoryID == 10">
+                                <h6 class="text-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On board </h6></div>
+                            <div ng-show="arrange_task_assigned(task.taskID).activity_category.categoryID == 11">
+                                <h6 class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Refused </h6></div>
+                        </div>
+                        <div class="row" ng-show="check_role_member().team_role.roleID == 2 
+                            && arrange_task_assigned(task.taskID).activity_category.categoryID == 9 
+                            && arrange_task_assigned(task.taskID).username == check_role_member().account.username">
+                            <div class="ml-5"><h6  class="text-danger font-weight-bold">For you</h6></div>
+                            <div class="ml-3"><button class="btn btn-success font-weight-bold" ng-click="accept_task_assigned(task.taskID,project.projectID)" >Accept</button></div>
+                            <div class="ml-3"><button class="btn btn-danger font-weight-bold" ng-click="refuse_task_assgined(task.taskID,project.projectID)" >Refuse</button></div>                        
+                        </div>
+                    </div>
+                    <div class="row-columne m-3">
+                        
+                        <div class="col-2 text-secondary">Start date</div>
+                        <div class="">
+                            <input ng-disabled="check_role_member().team_role.roleID != 1"   
+                            
+                            type="datetime-local"  id="start-date-modal" class="input-task w-100 {{task.deadline == false ? 'border border-danger' : ''}}">
+                        </div>
+                        <div class="col-2 text-secondary">End date</div>
+                        <div class="">
+                            <input ng-disabled="check_role_member().team_role.roleID != 1"   
+                            type="datetime-local" id="end-date-modal" class="input-task i w-100 {{task.deadline == false ? 'border border-danger' : ''}}">
+                        </div>
+                        
+                    </div>
+                    <div class="row-columne m-3">
+                        <div class="col-2 text-secondary">Project</div>
+                        <div class="">
+                            <h6 class="w-100">{{project.projectName}}</h6>
+                        </div>
+                        <div class="col-2">
+                            <div class="dropdown">
+                                <button ng-disabled="check_role_member().team_role.roleID != 1" 
+                                class="btn-assignee dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         {{task.section.sectionName}} {{task.taskNumber}}
+                        </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a ng-repeat="sec in sections"  ng-click="change_section(sec,task)"  class="dropdown-item">
+                                    
+                                    <i class="fa fa-check" ng-show="task.section.sectionID == sec.sectionID">&nbsp;{{sec.sectionName}}</i> 
+                                    <span ng-show="task.section.sectionID != sec.sectionID">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{sec.sectionName}}</span>
+                                </a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-columne m-3">
+                        <div class="col-2 text-secondary">Priority</div>
+                        <div class="col-2">
+                            <div class="dropdown">
+                                <button ng-disabled="check_role_member().team_role.roleID != 1"  
+                                class="btn-assignee dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         {{task.task_priority.priorityName}}
+                        </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a   ng-repeat="tk in tasks_priority" ng-click="change_priority(tk,task)"  class="dropdown-item">
+                                        <i class="fa fa-check" ng-show="task.task_priority.priorityID == tk.priorityID">&nbsp;{{tk.priorityName}}</i> 
+                                        <span ng-show="task.task_priority.priorityID != tk.priorityID">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{tk.priorityName}}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-columne m-3">
+                        <div class="col-2 text-secondary">Status</div>
+                        <div class="col-2">
+                            <div class="dropdown">
+                                <button ng-disabled="check_role_member().team_role.roleID != 1"  
+                                class="btn-assignee dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         {{task.task_status.statusName}}
+                        </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a ng-repeat="tk in tasks_status" ng-click="change_status(tk,task)"  class="dropdown-item">
+                                        <i class="fa fa-check" ng-show="task.task_status.statusID == tk.statusID">&nbsp;{{tk.statusName}}</i> 
+                                        <span ng-show="task.task_status.statusID != tk.statusID">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{tk.statusName}}</span> 
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="m-3 row-columne">
+                        <div class="col-2 text-secondary">Description</div>
+                    </div>
+                    <div class="m-3">
+                        <textarea style="font-size: 15px; height:150px " name="" ng-model="task.discription" ng-blur="change_description(task)" placeholder="Add more detail to this task..." id="" class="w-100 form-control"></textarea>
+                    </div>
+
+                    <div ng-show="spec_subtask.length != 0" class="m-3">
+                        <h5>Subtasks of {{task.taskName}}</h5>
+                            <div class="m-2 row" ng-repeat="sub in spec_subtask">
+                                <div class="col-3">
+                                    <input type="checkbox" class="process-checkbox" value="{{sub.status}}" ng-checked="sub.status" 
+                                    data-task-id="{{task.taskID}}"
+                                    id="{{sub.subID}}"/>{{sub.discription}}
+                                </div>
+                                <div class="col-4 dropdown">
+                                    <button ng-show="check_role_member().team_role.roleID == 1" class="btn-assignee dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i ng-show="arrange_subtask_assigned(sub.subID).length == 0" 
+                                                            class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                        <img ng-show="arrange_subtask_assigned(sub.subID).length != 0"  src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(arrange_subtask_assigned(sub.subID).username)}}" width="18">
+                                         &nbsp;{{arrange_subtask_assigned(sub.subID).length != 0  ? arrange_subtask_assigned(sub.subID).username : 'None'}} 
+                                    </button>
+                                    <button disabled ng-show="check_role_member().team_role.roleID == 2" class="btn-assignee dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i ng-show="arrange_subtask_assigned(sub.subID).activity_category.categoryID != 13 " 
+                                                            class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                        <img ng-show="arrange_subtask_assigned(sub.subID).activity_category.categoryID == 13"  
+                                        src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(arrange_subtask_assigned(sub.subID).username)}}" width="18">
+                                         &nbsp;{{(arrange_subtask_assigned(sub.subID).length != 0  
+                                            && arrange_subtask_assigned(sub.subID).activity_category.categoryID == 12
+                                            && arrange_subtask_assigned(sub.subID).username == check_role_member().account.username) ||
+                                            (arrange_subtask_assigned(sub.subID).length != 0
+                                            && arrange_subtask_assigned(sub.subID).activity_category.categoryID == 13)
+                                            ? arrange_subtask_assigned(sub.subID).username : 'None'}} 
+                                    </button>
+                                    <div class="dropdown-menu drop-assignee" aria-labelledby="dropdownMenuButton">
+                                        <input type="text" ng-model="query">
+                                        <a ng-repeat="mem in ac_members | filter:query" ng-click="assigned_subtask_to_so(mem.username,sub.subID,project.projectID,task.taskID)"    class="dropdown-item">
+                                            <img  src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(mem.username)}}" width="18">
+                                            <span >{{mem.email}}&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;{{mem.username}}</span>
+                                        </a>
+                                    </div>
+                                </div> 
+                                <div class="col-5">
+                                    <div ng-show="check_role_member().team_role.roleID == 1">
+                                        <div ng-show="arrange_subtask_assigned(sub.subID).activity_category.categoryID == 12">
+                                            <h6 class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Waiting </div>
+                                        <div ng-show="arrange_subtask_assigned(sub.subID).activity_category.categoryID == 13">
+                                            <h6 class="text-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On board </h6></div>
+                                        <div ng-show="arrange_subtask_assigned(sub.subID).activity_category.categoryID == 14">
+                                            <h6 class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Refused </h6></div>
+                                    </div>
+                                    <div class="row" ng-show="check_role_member().team_role.roleID == 2 
+                                        && arrange_subtask_assigned(sub.subID).activity_category.categoryID == 12 
+                                        && arrange_subtask_assigned(sub.subID).username == check_role_member().account.username">
+                                        <div class="ml-5"><h6  class="text-danger font-weight-bold">For you</h6></div>
+                                        <div class="ml-3"><button class="btn btn-success font-weight-bold" ng-click="accept_subtask_assigned(sub.subID,project.projectID,task.taskID)" >Accept</button></div>
+                                        <div class="ml-3"><button class="btn btn-danger font-weight-bold" ng-click="refuse_subtask_assgined(sub.subID,project.projectID,task.taskID)" >Refuse</button></div>                        
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="progressbar-container">
+                            <div class="progressbar-bar"></div>
+                            <div class="progressbar-label"></div>
+                        </div>
+                        <div class = "ready"></div>
+                    </div>
+                    <div class="plush m-3">
+                        <button class="text-secondary"  ng-disabled="check_role_member().team_role.roleID != 1" 
+                        data-toggle="collapse" data-target="#collapseExample" style="border: 1px solid rgb(197, 197, 197);"><b style="font-size: 16px;">+</b> Add subtask</button>
+                    
+                    <!-- START Upload file cua Hu`ng -->
+                    <div class="plush m-3 row">
+                        <form name="myFile" class="col-9 pl-0">
+                            <label class="form-label text-secondary ml-3" for="customFile">Upload Your File</label>
+                            <div class="row ml-1">
+                                <input type="file" id="fileUploadInput" name="myFile" ng-required="true" style="height: 40px;" class="form-control p-1 col-8" multiple onchange="angular.element(this).scope().fileUp(this.files)" id="customFile" />
+                                <button class="text-secondary mt-0 col-3" ng-click="upload_taskFile()" style="height: 40px; border: 1px solid rgb(197, 197, 197);">Upload file</button>
+                            </div>
+                        </form>
+
+                        <div class="col-3">
+                            <label class="form-label text-secondary mb-1 ml-2" for="customFile">Uploaded</label>
+                            <div class="dropdown">
+                                <label ng-show="list_file_download.length == 0" class="form-label text-danger mb-1 mt-3" for="customFile"><i>No File Submission!</i></label>
+                                <button ng-show="list_file_download.length != 0" onclick="showTF()" id="btnShowTF" class="text-secondary mt-1 p-2" style="height: 40px; border: 1px solid rgb(197, 197, 197);">View All</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-history mb-3" ng-show="list_file_download.length != 0" id="file_table" style="background-color: rgba(170, 170, 170, 0.123); display: none;">
+                        <table class="table" style="max-height: 500px; overflow: scroll;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Filename</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="fi in list_file_download">
+                                    <td style="max-width: 250px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{fi.name}}</td>
+                                    <td>{{fi.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+                                    <td>{{fi.account.fullname}}</td>
+                                    <td ng-show="{{fi.status == true}}" class="text-success">Complete</td>
+                                    <td ng-show="{{fi.status == false}}" class="text-warning">Late</td>
+                                    <td><button ng-click="downloadFile(fi.code)" ng-show="list_file_download.length != 0" class="btn btnCustom" style="border: 1px solid rgb(197, 197, 197);"><i class="bi bi-download"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END Upload file cua Hu`ng -->
+
+                    <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                <textarea style="font-size: 15px; height:100px " id="createSubTask" data-task-id="{{task.taskID}}"   placeholder="Add more detail to this task..." id="" class="w-100 form-control"></textarea>
+                                <button class="w-25 text-white p-2 font-weight-bold" ng-click="create_subtask()" style="font-size: 15px; background-color: darkcyan;">Create</button>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="plush m-3">
+                        <button class="text-secondary" ng-click="openCommentModal(task.taskID)"
+                        data-toggle="modal"  style="border: 1px solid rgb(197, 197, 197);"> Task Comments</button>
+                    </div>
+                    <div class="plush m-3">
+                        <button class="text-secondary" ng-click="openActModal(task.taskID)"
+                        data-toggle="modal"  style="border: 1px solid rgb(197, 197, 197);"> Task Activities</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
