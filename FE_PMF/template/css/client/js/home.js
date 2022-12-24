@@ -3209,7 +3209,7 @@ app.controller("taskController", function($scope, $http, $compile, $rootScope, $
     }
 });
 app.controller("navbarController", ($scope, $http, $timeout, $interval, $controller) => {
-    let hostNha = "http://103.160.2.51:8080/";
+    let hostNha = "http://103.160.2.51:8080/pmf";
     //Nhã làm
     $scope.search = ''
     $scope.searchInvitation = ''

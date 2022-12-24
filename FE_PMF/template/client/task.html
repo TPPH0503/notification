@@ -192,7 +192,7 @@
                         <i class="fas fa-bars btn btn-sm btn-nav text-light"></i>
                     </div>
                     <img class="mr-1 " src="http://103.160.2.51:8080/projectmanagement/template/images/logos/logo.png" width="25px" alt=" ">
-                    <a href="http://103.160.2.51:8080/projectmanagement/template/clienet/home.html" style="font-size: 24px;"> PMF</a>
+                    <a href="http://103.160.2.51:8080/projectmanagement/template/client/home.html" style="font-size: 24px;"> PMF</a>
                 </div>
                 <div class="sidebar-header">
                     <div class="user-pic">
@@ -349,9 +349,9 @@
                     <i class="fa fa-cog"></i>
                 </a>
             </div>
-            <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/notificationModal.html'" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/client/notificationModal.html'" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             </div>
-            <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/notificationPrivateModal.html'" class="modal fade" id="privateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/client/notificationPrivateModal.html'" class="modal fade" id="privateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             </div>
         </nav>
         <div class="title-page">
@@ -365,7 +365,7 @@
                             Open </button>
                     <div class="ml-2">
                         <button class="btn-share in-search" ng-click="forTagChip($parent.project)"><i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Share</button>
-                        <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/modalInvitation.html'" class="modal fade mt-5" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+                        <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/client/modalInvitation.html'" class="modal fade mt-5" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
                     </div>
                     <div class="ml-2">
                         <button ng-click="$parent.openModalListMember($parent.project)" class="btn-share"><i class="bi bi-person-fill" aria-hidden="true"></i>
@@ -510,7 +510,7 @@
         <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/modalConfirm.html'"></div>
         <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/modalListMember.html'"></div>
         <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/modalEditSubtask.html'"></div>
-        <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/modalAllSubTask.html'"></div>
+        <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/modalAllSubtask.html'"></div>
         <!-- <div ng-include="'http://103.160.2.51:8080/projectmanagement/template/client/disconnect.html'"></div> -->
 
     </div>
