@@ -29,7 +29,7 @@ public class GoogleDriveManager {
 	  private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 	  private static final String TOKENS_DIRECTORY_PATH = "tokens2";
 	  private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE);
-	  private static final String CREDENTIALS_FILE_PATH = "/client_secret_665393508774-rqs7n3l07uo44uivv52fo8gfbejl0c1n.apps.googleusercontent.com.json";
+	  private static final String CREDENTIALS_FILE_PATH = "/credentials2.json";
 	  public Drive getInstance() throws GeneralSecurityException, IOException {
 	     // Build a new authorized API client service.
 	     final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();

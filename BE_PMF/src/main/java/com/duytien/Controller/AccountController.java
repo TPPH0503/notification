@@ -297,21 +297,18 @@ public class AccountController {
 	}
 
 	// Upload anh da chon vao thu muc Image Account
-	@PutMapping("/pmf/Account/upload")
-	public String upload(@RequestParam("file") MultipartFile image) {
-		Path path = Paths.get("Deployed Resources/webapp/Image Account/");
-//		Path path = Paths.get("Deployed Resources/web-resources/Image Account/");
+	@PostMapping("/pmf/Account/upload")
+	public Account upload(@RequestParam("file") MultipartFile image) {
+		Account acc = new Account();
 		if (image != null) {
-			try {
-				InputStream inputStream = image.getInputStream();
-				Files.copy(inputStream, path.resolve(image.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-			} catch (Exception e) {
-
-			}
+		  String path = "/FileUpload";
+	   	  System.out.println("Request contains, File: " + image.getOriginalFilename());
+	   	  DriveFileManager driveFileManager = new DriveFileManager();
+	   	  acc.setImage(driveFileManager.uploadFile(image, path));
 		} else {
 			System.out.println("Rỗng!");
 		}
-		return image.getOriginalFilename();
+		return acc;
 	}
 
 	// Đặc biệt nghiêm trọg phần của Thái Hoàng Diệu

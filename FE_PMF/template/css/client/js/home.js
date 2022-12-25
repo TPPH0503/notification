@@ -164,7 +164,7 @@ app.controller("sidebarController", ($scope, $http, $timeout, $interval, $locati
     $scope.notificationOpen = () => {
         $scope.viewObject.newNotification = 0,
         $scope.viewObject.view = false,
-        $('#exampleModal').modal('show');
+        $('#exampleModal').modal('show')
     }
 
     //Load list private
@@ -509,10 +509,10 @@ app.controller("sidebarController", ($scope, $http, $timeout, $interval, $locati
         } catch (err) {
 
         }
-        return user;;
+        return user;
     }
-
-});
+    }
+})
 
 app.controller("homeController", ($scope, $http, $timeout, $interval) => {
     let host = "http://103.160.2.51:8080/pmf/pmf/Home";
