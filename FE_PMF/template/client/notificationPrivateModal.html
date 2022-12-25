@@ -42,8 +42,6 @@
                                     </h5>
                                 </div>
                                 <div class="col-12 m-auto p-0">
-                                    <span ng-if="item.project_security.securityID == 2" class="badge badge-danger"
-                                        style="font-weight:normal">{{item.project_security.securityName}}</span>
                                     <span ng-if="item.project_status.statusID == 1" class="badge badge-success"
                                         style="font-weight:normal">{{item.project_status.statusName}}</span>
                                     <span ng-if="item.project_status.statusID == 2" class="badge badge-secondary"
@@ -85,9 +83,9 @@
                         </div>
                         <div ng-show="item.membership == false" class="row pt-3 col-12">
                             <div class="col-12 row" >
-                                <div class="col-4 mt-2"><p  class="text-danger font-weight-bold" style="font-size: 15px; font-family: 'Varela Round', sans-serif;">For you</p></div>
-                                <div class="col-3 ml-1 mr-1"><button class="btn btn-success font-weight-bold" ng-click="accept_invitation(item.projectID)" >Accept</button></div>
-                                <div class="col-3"><button class="btn btn-danger font-weight-bold" ng-click="refuse_invitation(item.projectID)" >Refuse</button></div>       
+                                <div class="col-lg-4 col-md-3 mt-2"><p  class="text-danger font-weight-bold" style="font-size: 15px; font-family: 'Varela Round', sans-serif;">For you</p></div>
+                                <div class="col-lg-3 col-md-4 mr-1"><button class="btn btn-success font-weight-bold" ng-click="accept_invitation(item.projectID)" >Accept</button></div>
+                                <div class="col-lg-3 col-md-4 ml-1"><button class="btn btn-danger font-weight-bold" ng-click="refuse_invitation(item.projectID)" >Refuse</button></div>       
                             </div>
                         </div>
                     </div>

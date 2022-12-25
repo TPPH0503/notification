@@ -34,17 +34,26 @@
                               <h5 class="card-title" style="margin-bottom: 0;">{{mb.account.username}}  <code ng-show="mb.account.username == myselfRP">(You)</code></h5>
                               <p class="card-text" style="margin-bottom: 7px;">{{mb.account.fullname}}</p>
 
-                              <a class="card-text text-danger rem"
-                              ng-show="check_role_member().team_role.roleID == 1 && check_role_member().account.username != mb.account.username"
-                              ng-click="$parent.removeMember($parent.project.projectID, mb.account.username)"
-                              style="margin-left: 80px; font-size: 17px; cursor: pointer;">Remove</a>
+                              <div class="row">
+                                <div class="col-lg-4">
 
-                              <span class="card-text rem text-muted"
-                              ng-show="check_role_member().team_role.roleID == 1 && check_role_member().account.username == mb.account.username" 
-                              style="margin-left: 80px; font-size: 17px; cursor: no-drop;">Remove</span>
+                                </div>
 
-                              <!-- <a class="card-text vie" ng-click="$parent.showMemberRP($parent.project, mb.account.username)" style="cursor: pointer; margin-left: 5px; font-size: 17px;">View</a> -->
-                              <a class="card-text vie btn btn-info" ng-click="$parent.showMemberRP_Task($parent.project, mb.account.username)" style="cursor: pointer; margin-left: 5px; font-size: 17px;">View</a>
+                                <div class="col-lg-8 col-md-12">
+                                  <a class="card-text text-danger rem"
+                                  ng-show="check_role_member().team_role.roleID == 1 && check_role_member().account.username != mb.account.username"
+                                  ng-click="$parent.removeMember($parent.project.projectID, mb.account.username)"
+                                  style="font-size: 17px; cursor: pointer;">Remove</a>
+
+                                  <span class="card-text rem text-muted"
+                                  ng-show="check_role_member().team_role.roleID == 1 && check_role_member().account.username == mb.account.username" 
+                                  style="font-size: 17px; cursor: no-drop;">Remove</span>
+
+                                  <!-- <a class="card-text vie" ng-click="$parent.showMemberRP($parent.project, mb.account.username)" style="cursor: pointer; margin-left: 5px; font-size: 17px;">View</a> -->
+                                  <a class="card-text vie btn btn-info" ng-click="$parent.showMemberRP_Task($parent.project, mb.account.username)" style="cursor: pointer; margin-left: 5px; font-size: 17px;">View</a>
+                                </div>
+                              </div>
+
                             </div>
                           </div>
                         </div>
@@ -70,7 +79,7 @@
                         <li class="page-item" ng-show="pageNumber > 4"><a class="page-link" ng-click="number(pageNumber - 1)">{{pageNumber - 1}}</a></li>
 
                         <li class="page-item active" ng-show="pageNumber==2"><a class="page-link" ng-click="number(2)">2</a></li>
-                        <li class="page-item" ng-show="pageNumber <= 4 && pageNumber >= 1 && pageNumber != 2"><a class="page-link" ng-click="number(2)">2</a></li>
+                        <li class="page-item" ng-show="pageNumber <= 4 && totalPage > 1 && pageNumber >= 1 && pageNumber != 2"><a class="page-link" ng-click="number(2)">2</a></li>
                         <li class="page-item active" ng-show="pageNumber > 4" aria-current="page">
                           <a class="page-link" ng-click="number(pageNumber)">{{pageNumber}}</a>
                         </li>

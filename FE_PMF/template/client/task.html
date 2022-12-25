@@ -300,11 +300,15 @@
                 <li class="nav-item m-2 d-flex">
                     <h4 class="mr-2">{{$parent.project.projectName}}</h4>
 
-                    <button ng-if="$parent.project.project_status.statusID == 1" ng-click="$parent.shut_down_project($parent.project)" class="btn-share"><i class="fa fa-power-off" aria-hidden="true"></i>
-                            Shut down </button>
-                    <button ng-if="$parent.project.project_status.statusID == 2" ng-click="$parent.open_project($parent.project)" class="btn-share"><i class="fa fa-power-off" aria-hidden="true"></i>
-                            Open </button>
-                    <div class="ml-2">
+                    <div class="ml-2" ng-show="check_role_member().team_role.roleID == 1">
+                        <button ng-if="$parent.project.project_status.statusID == 1" ng-click="$parent.shut_down_project($parent.project)" class="btn-share"><i class="fa fa-power-off" aria-hidden="true"></i>
+                                Shut down </button>
+                    </div>
+                    <div class="ml-2" ng-show="check_role_member().team_role.roleID == 1">
+                        <button ng-if="$parent.project.project_status.statusID == 2" ng-click="$parent.open_project($parent.project)" class="btn-share"><i class="fa fa-power-off" aria-hidden="true"></i>
+                                Open </button>
+                    </div>
+                    <div class="ml-2" ng-show="check_role_member().team_role.roleID == 1">
                         <button class="btn-share in-search" ng-click="forTagChip($parent.project)"><i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Share</button>
                         <div ng-include src="'http://103.160.2.51:8080/projectmanagement/template/client/modalInvitation.html'" class="modal fade mt-5" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
                     </div>

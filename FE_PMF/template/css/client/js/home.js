@@ -300,12 +300,11 @@ app.controller("sidebarController", ($scope, $http, $timeout, $interval, $locati
             $rootScope.account = resp.data;
         }).catch(error => {
             console.log("Error", resp);
-            alert("Error!");
+            alert("Cập Nhật Thất Bại!");
         });
     };
 
     $rootScope.upload = function() {
-        alert("Updating...");
         image = document.getElementById('imgInpProfile').files[0];
         if (image != null) {
             var url = `http://103.160.2.51:8080/pmf/pmf/Account/upload`;
@@ -313,204 +312,16 @@ app.controller("sidebarController", ($scope, $http, $timeout, $interval, $locati
             form.append("file", image);
             $http.post(url, form, {
                 transformRequest: angular.identity,
-                headers: { 'Content-type': undefined }
+                headers: { 'Content-type': undefined}
             }).then(resp => {
                 console.log(resp.data.image);
                 $rootScope.update_profile(resp.data.image)
-                alert("Update successful!");
-                $('#fileUploadInput').val(null);
+                alert("Cập Nhật Thành Công!");
                 console.log("Upload Success", resp);
             }).catch(error => {
                 console.log("Upload Error", error);
             });
-    };
-
-    $rootScope.change_section_pi = async function(projectID) {
-        // await $rootScope.$emit("CallParentMethod", {});
-        await $scope.load_all_subtask(projectID);
-        await $scope.load_all_ac_mem(projectID);
-        await $scope.load_all_mem(projectID);
-        await $scope.load_all_task_assigned(projectID);
-        await $scope.load_all_subtask_assigned(projectID);
-    }
-
-    $rootScope.changeViewPrivate = async(projectID, type) => {
-        $scope.indexNotificationPrivate = 7;
-        await $scope.load_all_mem(projectID);
-        var check = await $scope.check_role_member();
-        if (check.team_role.roleID == 1) {
-            if (type == 1) {
-                $scope.notificationList = configuration(await getNotificationInvitationAdmin(projectID))
-            } else if (type == 2) {
-                $scope.notificationList = configuration(await getNotificationTaskAssignedAdmin(projectID))
-            } else if (type == 3) {
-                $scope.notificationList = configuration(await getNotificationSubTaskAssignedAdmin(projectID))
-            }
-        } else {
-            if (type == 1) {
-                $scope.notificationList = configuration(await getNotificationInvitation(projectID))
-            } else if (type == 2) {
-                $scope.notificationList = configuration(await getNotificationTaskAssigned(projectID))
-            } else if (type == 3) {
-                $scope.notificationList = configuration(await getNotificationSubTaskAssigned(projectID))
-            }
         }
-
-
-        $scope.viewObject.view = true
-        for (var i = 0; i < $scope.projectList.length; i++) {
-            if ($scope.projectList[i].projectID == projectID) {
-                $scope.projectList[i].projectNotification = 0
-            }
-        }
-    }
-
-    //Invitation
-    $scope.accept_invitation = async function(projectID) {
-        var infor = [username, projectID];
-
-        await $.ajax({
-            url: 'http://103.160.2.51:8080/pmf/pmf/project/accept-invitation',
-            type: 'POST',
-            contentType: "application/json",
-            data: JSON.stringify(infor),
-            success: async function(res) {
-                await $scope.load_list_project_private();
-                await $scope.check_list_project_private();
-                await $rootScope.load_all_project();
-                $scope.$apply();
-            },
-            error: function(resp) {
-                console.log('Assign ko ok')
-            }
-        });
-        var message = "User " + username + " has acepted the invitation";
-        await sendAPINoti(message, "task" + projectID, projectID, -1);
-
-    }
-
-    $scope.refuse_invitation = async function(projectID) {
-        var infor = [username, projectID];
-
-        await $.ajax({
-            url: 'http://103.160.2.51:8080/pmf/pmf/project/refuse-invitation',
-            type: 'POST',
-            contentType: "application/json",
-            data: JSON.stringify(infor),
-            success: async function(res) {
-                await $scope.load_list_project_private();
-                await $scope.check_list_project_private();
-                $scope.$apply();
-            },
-            error: function(resp) {
-                console.log('Assign ko ok')
-            }
-        });
-        var message = "User " + username + " has refused the invitation";
-        await sendAPINoti(message, "task" + projectID, projectID, -1);
-    }
-
-    let hostTien = "http://103.160.2.51:8080/pmf/pmf/project";
-    $scope.load_all_ac_mem = function(pid) {
-        var url = `${hostTien}/` + pid + `/ac-members`;
-        $http.get(url).then(resp => {
-            $scope.ac_members = resp.data;
-        }).catch(error => {
-            console.log("Error", error);
-        });
-    };
-
-    $scope.load_all_mem = function(pid) {
-        var url = `${hostTien}/` + pid + `/members`;
-        $http.get(url).then(resp => {
-            $scope.members = resp.data;
-        }).catch(error => {
-            console.log("Error", error);
-        });
-    };
-
-    $scope.load_all_subtask = async function(pid) {
-        var url = `${hostTien}/${pid}/subtask-all`;
-        await $http.get(url).then(resp => {
-            $scope.subtasks = resp.data;
-        }).catch(error => {
-            console.log("Error", error);
-        });
-    };
-
-    $scope.load_all_task_assigned = function(pid) {
-        var url = `${hostTien}/${pid}/task-assigned`;
-        $http.get(url).then(resp => {
-            $scope.act_task = resp.data;
-        }).catch(error => {
-            console.log("Error", error);
-        });
-    };
-
-    $scope.load_all_subtask_assigned = function(pid) {
-        var url = `${hostTien}/${pid}/subtask-assigned`;
-        $http.get(url).then(resp => {
-            $scope.act_subtask = resp.data;
-        }).catch(error => {
-            console.log("Error", error);
-        });
-    };
-
-    $scope.getTaskID = async function(subid) {
-        var taskID = -1;
-        await $scope.subtasks.forEach(function(item) {
-            if (item.subID == subid) {
-                taskID = item.task.taskID;
-                return;
-            }
-        })
-        return taskID;
-    }
-
-    $scope.arrange_task_assigned = function(tid) {
-        var worker = [];
-        try {
-            $scope.act_task.forEach(function(item) {
-                if (item.objectID == tid) {
-                    worker = item;
-                }
-            });
-        } catch (err) {
-
-        }
-        return worker;
-
-    }
-
-    $scope.arrange_subtask_assigned = function(subid) {
-        var worker = [];
-        try {
-            $scope.act_subtask.forEach(function(item) {
-                if (item.objectID == subid) {
-                    worker = item;
-                }
-            })
-        } catch (err) {
-
-        }
-        return worker;
-
-    }
-
-    $scope.check_role_member = function() {
-        var user = [];
-        try {
-            $scope.members.forEach(function(item) {
-                if (item.account.username == username) {
-                    user = item;
-                    return;
-                }
-            })
-        } catch (err) {
-
-        }
-        return user;
-    }
     }
 })
 
@@ -3123,8 +2934,7 @@ app.controller("taskController", function($scope, $http, $compile, $rootScope, $
 
     //Download task_file dua theo fileID
     $scope.downloadFile = function(id) {
-        var urlFile = `https://drive.google.com/file/d/${id}/view`;
-        window.open(urlFile, 'Downloading');
+        window.location.href = `http://103.160.2.51:8080/pmf/pmf/getFile/${id}`;
     }
 
     //Luu du lieu task_fike vao db
@@ -3134,6 +2944,7 @@ app.controller("taskController", function($scope, $http, $compile, $rootScope, $
             var today = new Date();
             var deadline = new Date(deadline_for_file);
             var status;
+            var newName = codeID +"_"+name;
             if (deadline_for_file != null) {
                 if (today <= deadline) {
                     status = true;
@@ -3293,6 +3104,7 @@ app.controller("navbarController", ($scope, $http, $timeout, $interval, $control
             data: JSON.stringify(arr),
             success: (res) => {
                 $('.tag').remove();
+                sendNotification("Invitation", "<span class='text-success'>Invite has been sent</span>", new Date());
             },
             error: (err) => {
                 console.log(err)
