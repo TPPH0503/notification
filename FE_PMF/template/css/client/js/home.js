@@ -163,7 +163,8 @@ app.controller("sidebarController", ($scope, $http, $timeout, $interval, $locati
     $interval($scope.intervalFunction, 2000)
     $scope.notificationOpen = () => {
         $scope.viewObject.newNotification = 0,
-            $scope.viewObject.view = false
+        $scope.viewObject.view = false,
+        $('#exampleModal').modal('show');
     }
 
     //Load list private
@@ -223,10 +224,11 @@ app.controller("sidebarController", ($scope, $http, $timeout, $interval, $locati
     //profile người dùng của Hùng
     $rootScope.load_profile = function() {
         var url = `http://103.160.2.51:8080/pmf/pmf/Account/getProfile/${username}`;
-        $http.get(url).then(resp => {
+        $http.get(url).then(async resp => {
             $rootScope.verifiedEmail = resp.data.email;
             $rootScope.load_email_for_check_updateProfile();
             $rootScope.account = resp.data;
+            await $('#avatarProfile').attr('src','https://drive.google.com/uc?export=image&id='+ resp.data.image);
             $('#profileModal').modal('show');
             console.log("Sucess", resp);
         }).catch(error => {
@@ -270,9 +272,6 @@ app.controller("sidebarController", ($scope, $http, $timeout, $interval, $locati
         });
     }
 
-    $rootScope.checkemailfor_check_updateProfile = function() {
-    }
-
     $rootScope.verify = function(email){
         $scope.codeInputed = $('#exampleInputCode').val();
         if($scope.codeInputed == $scope.codeVerify){
@@ -289,47 +288,42 @@ app.controller("sidebarController", ($scope, $http, $timeout, $interval, $locati
         $('#profileModal').modal('show');
     }
 
-    $rootScope.update_profile = function() {
-        
+    $rootScope.update_profile = function(imageCode) {
         var item = angular.copy($rootScope.account);
         if (image != null) {
-            var name = image.name;
+            var name = imageCode;
         } else {
             var name = $rootScope.account.image;
         }
-        var url = `${profileHost}/updateProfile/${name}`;
+        var url = `http://103.160.2.51:8080/pmf/pmf/Account/updateProfile/${name}`;
         $http.put(url, item).then(resp => {
             $rootScope.account = resp.data;
-            $rootScope.upload();
-            alert("Cập Nhật Thành Công!");
-            window.location.reload()
         }).catch(error => {
             console.log("Error", resp);
-            alert("Cập Nhật Thất Bại!");
+            alert("Error!");
         });
     };
 
-    var image;
     $rootScope.upload = function() {
+        alert("Updating...");
+        image = document.getElementById('imgInpProfile').files[0];
         if (image != null) {
-            var url = `${profileHost}/upload`;
+            var url = `http://103.160.2.51:8080/pmf/pmf/Account/upload`;
             var form = new FormData();
             form.append("file", image);
             $http.post(url, form, {
                 transformRequest: angular.identity,
                 headers: { 'Content-type': undefined }
             }).then(resp => {
+                console.log(resp.data.image);
+                $rootScope.update_profile(resp.data.image)
+                alert("Update successful!");
+                $('#fileUploadInput').val(null);
                 console.log("Upload Success", resp);
             }).catch(error => {
-                console.log("Upload Error", resp);
+                console.log("Upload Error", error);
             });
-        }
-    }
-
-    $rootScope.fileUp = function(file, input) {
-        image = file[0];
-        readURL(input)
-    }
+    };
 
     $rootScope.change_section_pi = async function(projectID) {
         // await $rootScope.$emit("CallParentMethod", {});
@@ -518,7 +512,8 @@ app.controller("sidebarController", ($scope, $http, $timeout, $interval, $locati
         return user;;
     }
 
-})
+});
+
 app.controller("homeController", ($scope, $http, $timeout, $interval) => {
     let host = "http://103.160.2.51:8080/pmf/pmf/Home";
 
@@ -3202,6 +3197,7 @@ app.controller("taskController", function($scope, $http, $compile, $rootScope, $
 
     $scope.fileUp = function(file) {
         if (file[0].size >= 20971520) {
+            $('#fileUploadInput').val(null);
             alert("File's size exceeds the configured maximum (20Mb)!");
         } else {
             task_file = file[0];

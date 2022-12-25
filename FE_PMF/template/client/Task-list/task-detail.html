@@ -97,14 +97,14 @@
                                             <button ng-show="check_role_member().team_role.roleID == 1" class="btn-assignee dropdown-toggle font-weight-bold p-2 mb-1 mt-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i ng-show="arrange_subtask_assigned(sub.subID).length == 0" 
                                                                         class="fa fa-user-circle-o" aria-hidden="true"></i>
-                                                    <img ng-show="arrange_subtask_assigned(sub.subID).length != 0"  src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(arrange_subtask_assigned(sub.subID).username)}}" width="18">
+                                                    <img ng-show="arrange_subtask_assigned(sub.subID).length != 0"  src="https://drive.google.com/uc?export=image&id={{return_image(arrange_subtask_assigned(sub.subID).username)}}" width="18">
                                                     &nbsp;{{arrange_subtask_assigned(sub.subID).length != 0  ? arrange_subtask_assigned(sub.subID).username : 'None'}} 
                                                 </button>
                                             <button disabled ng-show="check_role_member().team_role.roleID == 2" class="btn-assignee dropdown-toggle font-weight-bold p-2 mb-1 mt-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i ng-show="arrange_subtask_assigned(sub.subID).activity_category.categoryID != 13 " 
                                                                         class="fa fa-user-circle-o" aria-hidden="true"></i>
                                                     <img ng-show="arrange_subtask_assigned(sub.subID).activity_category.categoryID == 13"  
-                                                    src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(arrange_subtask_assigned(sub.subID).username)}}" width="18">
+                                                    src="https://drive.google.com/uc?export=image&id={{return_image(arrange_subtask_assigned(sub.subID).username)}}" width="18">
                                                     &nbsp;{{(arrange_subtask_assigned(sub.subID).length != 0  
                                                         && arrange_subtask_assigned(sub.subID).activity_category.categoryID == 12
                                                         && arrange_subtask_assigned(sub.subID).username == check_role_member().account.username) ||
@@ -115,7 +115,7 @@
                                             <div class="dropdown-menu drop-assignee" aria-labelledby="dropdownMenuButton">
                                                 <input type="text" ng-model="query">
                                                 <a ng-repeat="mem in ac_members | filter:query" ng-click="assigned_subtask_to_so(mem.username,sub.subID,project.projectID,task.taskID)" class="dropdown-item">
-                                                    <img src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(mem.username)}}" width="18">
+                                                    <img src="https://drive.google.com/uc?export=image&id={{return_image(mem.username)}}" width="18">
                                                     <span>{{mem.email}}&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;{{mem.username}}</span>
                                                 </a>
                                             </div>
@@ -253,14 +253,14 @@
                                         <button ng-show="check_role_member().team_role.roleID == 1" class="btn-assignee dropdown-toggle font-weight-bold p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i ng-show="arrange_task_assigned(task.taskID).length == 0" 
                                                                     class="fa fa-user-circle-o" aria-hidden="true"></i>
-                                                <img ng-show="arrange_task_assigned(task.taskID).length != 0"  src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(arrange_task_assigned(task.taskID).username)}}" width="18">
+                                                <img ng-show="arrange_task_assigned(task.taskID).length != 0"  src="https://drive.google.com/uc?export=image&id={{return_image(arrange_task_assigned(task.taskID).username)}}" width="18">
                                                 &nbsp;{{arrange_task_assigned(task.taskID).length != 0  ? arrange_task_assigned(task.taskID).username : 'None'}} 
                                             </button>
                                         <button disabled ng-show="check_role_member().team_role.roleID == 2" class="btn-assignee dropdown-toggle font-weight-bold p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i ng-show="arrange_task_assigned(task.taskID).activity_category.categoryID != 10 " 
                                                                     class="fa fa-user-circle-o" aria-hidden="true"></i>
                                                 <img ng-show="arrange_task_assigned(task.taskID).activity_category.categoryID == 10"  
-                                                src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(arrange_task_assigned(task.taskID).username)}}" width="18">
+                                                src="https://drive.google.com/uc?export=image&id={{return_image(arrange_task_assigned(task.taskID).username)}}" width="18">
                                                 &nbsp;{{(arrange_task_assigned(task.taskID).length != 0  
                                                     && arrange_task_assigned(task.taskID).activity_category.categoryID == 9
                                                     && arrange_task_assigned(task.taskID).username == check_role_member().account.username) ||
@@ -272,7 +272,7 @@
                                         <div class="dropdown-menu drop-assignee" aria-labelledby="dropdownMenuButton">
                                             <input type="text" ng-model="query">
                                             <a ng-repeat="mem in ac_members | filter:query" ng-click="assigned_task_to_so(mem.username,task.taskID,project.projectID)" class="dropdown-item">
-                                                <img src="http://103.160.2.51:8080/pmf/pmf/getImage/{{return_image(mem.username)}}" width="18">
+                                                <img src="https://drive.google.com/uc?export=image&id={{return_image(mem.username)}}" width="18">
                                                 <span>{{mem.email}}&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;{{mem.username}}</span>
                                             </a>
                                         </div>
